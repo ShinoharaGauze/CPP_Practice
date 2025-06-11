@@ -17,6 +17,11 @@ class CPP_PRACTICE_API ACPCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+protected:
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AActor> ProjectileClass;
+	
 public:
 	// Sets default values for this character's properties
 	ACPCharacter();
@@ -27,12 +32,18 @@ protected:
 	TObjectPtr<USpringArmComponent> SpringArmComp;
 
 	UPROPERTY(visibleAnywhere)
-	UCameraComponent* CameraComp;
+	TObjectPtr<UCameraComponent> CameraComp;
 	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	void MoveForward(float Value);
+
+	void MoveRight(float Value);
+
+	void PrimaryAttack();
+
+	void Jump();
 
 public:	
 	// Called every frame
