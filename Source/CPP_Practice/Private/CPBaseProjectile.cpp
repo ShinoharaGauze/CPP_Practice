@@ -1,14 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "CPMagicProjectile.h"
+#include "CPBaseProjectile.h"
 
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
-ACPMagicProjectile::ACPMagicProjectile()
+ACPBaseProjectile::ACPBaseProjectile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -24,18 +24,18 @@ ACPMagicProjectile::ACPMagicProjectile()
 	MovementComp->InitialSpeed = 1000.0f;
 	MovementComp->bRotationFollowsVelocity = true;
 	MovementComp->bInitialVelocityInLocalSpace = true;
-
+	
 }
 
 // Called when the game starts or when spawned
-void ACPMagicProjectile::BeginPlay()
+void ACPBaseProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
 // Called every frame
-void ACPMagicProjectile::Tick(float DeltaTime)
+void ACPBaseProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
