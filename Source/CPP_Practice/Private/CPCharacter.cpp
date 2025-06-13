@@ -56,6 +56,10 @@ void ACPCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACPCharacter::Jump);
 
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ACPCharacter::PrimaryAttack);
+	PlayerInputComponent->BindAction("ESkill", IE_Pressed, this, &ACPCharacter::ESkill);
+	PlayerInputComponent->BindAction("QSkill", IE_Pressed, this, &ACPCharacter::QSkill);
+
+	
 	PlayerInputComponent->BindAction("PrimaryInteract", IE_Pressed, this, &ACPCharacter::PrimaryInteract);
 }
 
@@ -86,17 +90,123 @@ void ACPCharacter::PrimaryAttack()
 	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &ACPCharacter::PrimaryAttack_TimeElapsed, 0.2f);
 }
 
+void ACPCharacter::ESkill()
+{
+	PlayAnimMontage(AttackAnim);
+
+	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &ACPCharacter::ESkill_TimeElapsed, 0.2f);
+}
+
+void ACPCharacter::QSkill()
+{
+	PlayAnimMontage(AttackAnim);
+
+	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &ACPCharacter::QSkill_TimeElapsed, 0.2f);
+}
+
 void ACPCharacter::PrimaryAttack_TimeElapsed()
 {
 	FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
+	FVector CameraLocation = CameraComp->GetComponentLocation();
 	
-	FTransform SpawnTM = FTransform(GetControlRotation(), HandLocation);
+	FVector TraceDirection = GetControlRotation().Vector();
+	FVector TraceEnd = CameraLocation + TraceDirection * 10000.f;
+
+	FHitResult HitResult;
+	FCollisionQueryParams QueryParams;
+	QueryParams.AddIgnoredActor(this); 
+	bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult, CameraLocation, TraceEnd, ECC_Visibility, QueryParams);
+
+	FVector TargetPoint;
+	if (bHit)
+	{
+		TargetPoint = HitResult.ImpactPoint;
+	}
+	else
+	{
+		TargetPoint = TraceEnd; // 没击中则用远点
+	}
+
+	FVector ShotDirection = (TargetPoint - HandLocation).GetSafeNormal();
+	FRotator ShotRotation = ShotDirection.Rotation();
+	
+	FTransform SpawnTM = FTransform(ShotRotation, HandLocation);
 
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	SpawnParams.Instigator = this;
 	
-	GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTM, SpawnParams);
+	GetWorld()->SpawnActor<AActor>(AttackProjectileClass, SpawnTM, SpawnParams);
+}
+
+void ACPCharacter::ESkill_TimeElapsed()
+{
+	FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
+	FVector CameraLocation = CameraComp->GetComponentLocation();
+	
+	FVector TraceDirection = GetControlRotation().Vector();
+	FVector TraceEnd = CameraLocation + TraceDirection * 10000.f;
+
+	FHitResult HitResult;
+	FCollisionQueryParams QueryParams;
+	QueryParams.AddIgnoredActor(this); 
+	bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult, CameraLocation, TraceEnd, ECC_Visibility, QueryParams);
+
+	FVector TargetPoint;
+	if (bHit)
+	{
+		TargetPoint = HitResult.ImpactPoint;
+	}
+	else
+	{
+		TargetPoint = TraceEnd; // 没击中则用远点
+	}
+
+	FVector ShotDirection = (TargetPoint - HandLocation).GetSafeNormal();
+	FRotator ShotRotation = ShotDirection.Rotation();
+	
+	FTransform SpawnTM = FTransform(ShotRotation, HandLocation);
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	SpawnParams.Instigator = this;
+	
+	GetWorld()->SpawnActor<AActor>(ESkillProjectileClass, SpawnTM, SpawnParams);
+}
+
+void ACPCharacter::QSkill_TimeElapsed()
+{
+	FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
+	FVector CameraLocation = CameraComp->GetComponentLocation();
+	
+	FVector TraceDirection = GetControlRotation().Vector();
+	FVector TraceEnd = CameraLocation + TraceDirection * 10000.f;
+
+	FHitResult HitResult;
+	FCollisionQueryParams QueryParams;
+	QueryParams.AddIgnoredActor(this); 
+	bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult, CameraLocation, TraceEnd, ECC_Visibility, QueryParams);
+
+	FVector TargetPoint;
+	if (bHit)
+	{
+		TargetPoint = HitResult.ImpactPoint;
+	}
+	else
+	{
+		TargetPoint = TraceEnd; // 没击中则用远点
+	}
+
+	FVector ShotDirection = (TargetPoint - HandLocation).GetSafeNormal();
+	FRotator ShotRotation = ShotDirection.Rotation();
+	
+	FTransform SpawnTM = FTransform(ShotRotation, HandLocation);
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	SpawnParams.Instigator = this;
+	
+	GetWorld()->SpawnActor<AActor>(QSkillProjectileClass, SpawnTM, SpawnParams);
 }
 
 void ACPCharacter::PrimaryInteract()

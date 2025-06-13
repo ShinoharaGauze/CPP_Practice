@@ -20,7 +20,13 @@ class CPP_PRACTICE_API ACPCharacter : public ACharacter
 protected:
 	
 	UPROPERTY(EditAnywhere, Category = "Attack")
-	TSubclassOf<AActor> ProjectileClass;
+	TSubclassOf<AActor> AttackProjectileClass;
+
+	UPROPERTY(EditAnywhere, Category = "Attack")
+	TSubclassOf<AActor> ESkillProjectileClass;
+
+	UPROPERTY(EditAnywhere, Category = "Attack")
+	TSubclassOf<AActor> QSkillProjectileClass;
 	
 	UPROPERTY(EditAnywhere, Category = "Attack")
 	UAnimMontage* AttackAnim;
@@ -51,7 +57,15 @@ protected:
 
 	void PrimaryAttack();
 
+	void ESkill();
+
+	void QSkill();
+
 	void PrimaryAttack_TimeElapsed();
+
+	void ESkill_TimeElapsed();
+
+	void QSkill_TimeElapsed();
 	
 	void PrimaryInteract();
 	
@@ -60,8 +74,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-
+	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
