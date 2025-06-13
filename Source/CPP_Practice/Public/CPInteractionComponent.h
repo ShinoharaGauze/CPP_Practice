@@ -12,6 +12,10 @@ class CPP_PRACTICE_API UCPInteractionComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+public:
+
+	void PrimaryInteract();
+	
 public:	
 	// Sets default values for this component's properties
 	UCPInteractionComponent();

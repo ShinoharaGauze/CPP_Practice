@@ -7,10 +7,10 @@
 #include "CPCharacter.generated.h"
 
 
-
-
+class UCPInteractionComponent;
 class UCameraComponent;
 class USpringArmComponent;
+class UAnimMontage;
 
 UCLASS()
 class CPP_PRACTICE_API ACPCharacter : public ACharacter
@@ -18,9 +18,14 @@ class CPP_PRACTICE_API ACPCharacter : public ACharacter
 	GENERATED_BODY()
 
 protected:
-
-	UPROPERTY(EditAnywhere)
+	
+	UPROPERTY(EditAnywhere, Category = "Attack")
 	TSubclassOf<AActor> ProjectileClass;
+	
+	UPROPERTY(EditAnywhere, Category = "Attack")
+	UAnimMontage* AttackAnim;
+
+	FTimerHandle TimerHandle_PrimaryAttack;
 	
 public:
 	// Sets default values for this character's properties
@@ -33,6 +38,9 @@ protected:
 
 	UPROPERTY(visibleAnywhere)
 	TObjectPtr<UCameraComponent> CameraComp;
+
+	UPROPERTY(visibleAnywhere)
+	TObjectPtr<UCPInteractionComponent> InteractionComp;
 	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -43,11 +51,16 @@ protected:
 
 	void PrimaryAttack();
 
+	void PrimaryAttack_TimeElapsed();
+	
+	void PrimaryInteract();
+	
 	void Jump();
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
