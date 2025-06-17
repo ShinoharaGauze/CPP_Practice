@@ -3,6 +3,7 @@
 
 #include "CPBaseProjectile.h"
 
+#include "CPAttributeComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
@@ -13,8 +14,11 @@ ACPBaseProjectile::ACPBaseProjectile()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	Damage = 0;
+
 	SphereComp = CreateDefaultSubobject<USphereComponent>("SphereComp");
 	SphereComp->SetCollisionProfileName("Projectile");
+	SphereComp->OnComponentBeginOverlap.AddDynamic(this, &ACPBaseProjectile::OnActorOverlap);
 	RootComponent = SphereComp;
 
 	EffectComp = CreateDefaultSubobject<UParticleSystemComponent>("EffectComp");
@@ -25,6 +29,21 @@ ACPBaseProjectile::ACPBaseProjectile()
 	MovementComp->bRotationFollowsVelocity = true;
 	MovementComp->bInitialVelocityInLocalSpace = true;
 	
+}
+
+void ACPBaseProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor)
+	{
+		if (UCPAttributeComponent* AttributeComp = Cast<UCPAttributeComponent>(OtherActor->GetComponentByClass(UCPAttributeComponent::StaticClass())))
+		{
+			AttributeComp->ApplyHealthChange(0);
+			
+			Destroy();
+			
+		}
+	}
 }
 
 // Called when the game starts or when spawned

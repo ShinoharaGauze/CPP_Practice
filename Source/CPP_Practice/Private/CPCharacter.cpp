@@ -3,6 +3,7 @@
 
 #include "CPCharacter.h"
 
+#include "CPAttributeComponent.h"
 #include "CPInteractionComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -22,6 +23,8 @@ ACPCharacter::ACPCharacter()
 	CameraComp->SetupAttachment(SpringArmComp);
 
 	InteractionComp = CreateDefaultSubobject<UCPInteractionComponent>("InteractionComp");
+
+	AttributeComp = CreateDefaultSubobject<UCPAttributeComponent>("AttributeComp");
 	
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	

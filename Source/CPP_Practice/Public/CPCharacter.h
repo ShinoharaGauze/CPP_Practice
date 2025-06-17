@@ -7,6 +7,7 @@
 #include "CPCharacter.generated.h"
 
 
+class UCPAttributeComponent;
 class UCPInteractionComponent;
 class UCameraComponent;
 class USpringArmComponent;
@@ -39,7 +40,7 @@ public:
 
 protected:
 
-	UPROPERTY(visibleAnywhere, Category = "Component")
+	UPROPERTY(visibleAnywhere, Category = "Components")
 	TObjectPtr<USpringArmComponent> SpringArmComp;
 
 	UPROPERTY(visibleAnywhere)
@@ -47,6 +48,9 @@ protected:
 
 	UPROPERTY(visibleAnywhere)
 	TObjectPtr<UCPInteractionComponent> InteractionComp;
+
+	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<UCPAttributeComponent> AttributeComp;
 	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
