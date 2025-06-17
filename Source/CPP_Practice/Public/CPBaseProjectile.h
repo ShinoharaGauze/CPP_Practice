@@ -20,6 +20,7 @@ public:
 
 protected:
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	float Damage;
 
 	UFUNCTION()

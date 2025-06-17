@@ -3,3 +3,7 @@
 
 #include "CPMagicProjectile.h"
 
+ACPMagicProjectile::ACPMagicProjectile()
+{
+	Damage = 20.0f;
+}

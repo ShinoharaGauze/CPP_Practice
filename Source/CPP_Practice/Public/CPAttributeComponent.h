@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "CPAttributeComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnHealthChanged, AActor*, InstigatorActor, UCPAttributeComponent*, OwningComp, float, NewHealth, float, Delta);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CPP_PRACTICE_API UCPAttributeComponent : public UActorComponent
@@ -23,6 +24,9 @@ protected:
 
 public:
 
+	UPROPERTY(BlueprintAssignable)
+	FOnHealthChanged OnHealthChanged;
+	
 	UFUNCTION(BlueprintCallable, Category = "Attributes ")
 	bool ApplyHealthChange(float Delta);
 };

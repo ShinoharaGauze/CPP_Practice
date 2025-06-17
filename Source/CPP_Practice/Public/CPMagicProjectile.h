@@ -13,5 +13,8 @@ UCLASS()
 class CPP_PRACTICE_API ACPMagicProjectile : public ACPBaseProjectile
 {
 	GENERATED_BODY()
+
+public:
+	ACPMagicProjectile();
 	
 };
