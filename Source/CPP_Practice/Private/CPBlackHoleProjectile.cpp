@@ -2,4 +2,9 @@
 
 
 #include "CPBlackHoleProjectile.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 
+ACPBlackHoleProjectile::ACPBlackHoleProjectile()
+{
+	MovementComp->InitialSpeed = 1000.0f;
+}

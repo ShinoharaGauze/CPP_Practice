@@ -18,26 +18,19 @@ public:
 	ACPTeleportProjectile();
 
 protected:
-	virtual void BeginPlay() override;
 	
-	UFUNCTION()
-	void OnProjectileHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
-						 UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	UPROPERTY(EditDefaultsOnly, Category = "Teleport")
+	float TeleportDelay;
 
-	void Explode();
+	UPROPERTY(EditDefaultsOnly, Category = "Teleport")
+	float DetonateDelay;
+	
+	FTimerHandle TimerHandle_DelayedDetonate;
 
+	virtual void Explode_Implementation() override;
+	
 	void TeleportInstigator();
 
-	FTimerHandle TimerHandle_Explode;
-	FTimerHandle TimerHandle_Teleport;
-
-	bool bExploded = false;
-
-	FVector ImpactPoint;
-
-	TWeakObjectPtr<APawn> InstigatorPawn;
-
-	UPROPERTY(EditDefaultsOnly, Category="Effects")
-	UParticleSystem* ExplosionVFX;
+	virtual void BeginPlay() override;
 
 };

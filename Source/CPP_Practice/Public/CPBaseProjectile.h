@@ -18,18 +18,12 @@ public:
 	// Sets default values for this actor's properties
 	ACPBaseProjectile();
 
+	virtual void BeginPlay() override;
+
 protected:
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	float Damage;
-
-	UFUNCTION()
-	void OnActorOverlap(UPrimitiveComponent* OverlappedComponent,
-						AActor* OtherActor,
-						UPrimitiveComponent* OtherComp,
-						int32 OtherBodyIndex,
-						bool bFromSweep,
-						const FHitResult & SweepResult);
+	UPROPERTY(EditDefaultsOnly, Category = "Effects")
+	UParticleSystem* ImpactVFX;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<USphereComponent> SphereComp;
@@ -39,12 +33,13 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UParticleSystemComponent> EffectComp;
+
+	UFUNCTION()
+	virtual void OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 	
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void Explode();
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
+	virtual void PostInitializeComponents() override;
+	
 };

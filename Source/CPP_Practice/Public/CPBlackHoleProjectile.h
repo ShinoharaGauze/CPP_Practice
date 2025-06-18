@@ -13,5 +13,7 @@ UCLASS()
 class CPP_PRACTICE_API ACPBlackHoleProjectile : public ACPBaseProjectile
 {
 	GENERATED_BODY()
-	
+
+public:
+	ACPBlackHoleProjectile();
 };

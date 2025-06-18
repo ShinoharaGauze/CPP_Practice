@@ -10,65 +10,39 @@
 
 ACPTeleportProjectile::ACPTeleportProjectile()
 {
-	SphereComp->OnComponentHit.AddDynamic(this, &ACPTeleportProjectile::OnProjectileHit);
+	TeleportDelay = 0.2f;
+	DetonateDelay = 0.2f;
 
-	MovementComp->InitialSpeed = 3000.0f;
+	MovementComp->InitialSpeed = 6000.0f;
 }
 
 void ACPTeleportProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-
-	if (AActor* InstigatorActor = GetInstigator())
-	{
-		SphereComp->IgnoreActorWhenMoving(InstigatorActor, true);
-	}
 	
-	InstigatorPawn = GetInstigator();
-	GetWorldTimerManager().SetTimer(TimerHandle_Explode, this, &ACPTeleportProjectile::Explode, 0.2f);
+	GetWorldTimerManager().SetTimer(TimerHandle_DelayedDetonate, this, &ACPTeleportProjectile::Explode, DetonateDelay);
 }
 
-void ACPTeleportProjectile::OnProjectileHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
-											UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+void ACPTeleportProjectile::Explode_Implementation()
 {
-	if (!bExploded)
-	{
-		Explode();
-	}
-}
+	GetWorldTimerManager().ClearTimer(TimerHandle_DelayedDetonate);
 
-void ACPTeleportProjectile::Explode()
-{
-	if (bExploded)
-		return;
+	UGameplayStatics::SpawnEmitterAtLocation(this, ImpactVFX, GetActorLocation(), GetActorRotation());
 
-	bExploded = true;
+	EffectComp->DeactivateSystem();
 
-	ImpactPoint = GetActorLocation();
-	
-	if (ExplosionVFX)
-	{
-		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionVFX, ImpactPoint);
-	}
-
-	if (EffectComp)
-	{
-		EffectComp->DeactivateSystem();
-	}
-	
-	GetWorldTimerManager().SetTimer(TimerHandle_Teleport, this, &ACPTeleportProjectile::TeleportInstigator, 0.2f);
-	
-	SetActorHiddenInGame(true);
-	SetActorEnableCollision(false);
 	MovementComp->StopMovementImmediately();
+	SetActorEnableCollision(false);
+	
+	FTimerHandle TimerHandle_DelayedTeleport;
+	GetWorldTimerManager().SetTimer(TimerHandle_DelayedTeleport, this, &ACPTeleportProjectile::TeleportInstigator, TeleportDelay);
 }
 
 void ACPTeleportProjectile::TeleportInstigator()
 {
-	if (InstigatorPawn.IsValid())
+	AActor* ActorToTeleport = GetInstigator();
+	if (ensure(ActorToTeleport))
 	{
-		InstigatorPawn->SetActorLocation(ImpactPoint);
+		ActorToTeleport->TeleportTo(GetActorLocation(), ActorToTeleport->GetActorRotation(), false, false);
 	}
-
-	Destroy();
 }

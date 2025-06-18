@@ -16,5 +16,10 @@ class CPP_PRACTICE_API ACPMagicProjectile : public ACPBaseProjectile
 
 public:
 	ACPMagicProjectile();
-	
+
+protected:
+	virtual void OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit) override;
+
+	UPROPERTY(EditDefaultsOnly)
+	float Damage;
 };

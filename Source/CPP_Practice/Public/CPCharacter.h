@@ -64,6 +64,7 @@ protected:
 	void ESkill();
 
 	void QSkill();
+	void SpawnProjectile(TSubclassOf<AActor> ClassToSpawn);
 
 	void PrimaryAttack_TimeElapsed();
 
