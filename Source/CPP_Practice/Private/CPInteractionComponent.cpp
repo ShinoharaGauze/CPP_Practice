@@ -4,77 +4,101 @@
 #include "CPInteractionComponent.h"
 
 #include "CPGameplayInterface.h"
-#include "ProfilingDebugging/CookStats.h"
+#include "Blueprint/UserWidget.h"
 
-// Sets default values for this component's properties
 UCPInteractionComponent::UCPInteractionComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
-
-
-// Called when the game starts
-void UCPInteractionComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-	
-}
-
 
 // Called every frame
 void UCPInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+    Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+    AActor* Owner = GetOwner();
+    APawn* MyPawn = Cast<APawn>(Owner);
+    if (!MyPawn) return;
+
+    APlayerController* PC = Cast<APlayerController>(MyPawn->GetController());
+    if (!PC) return;
+
+    // 屏幕中心点
+    int32 ViewportSizeX, ViewportSizeY;
+    PC->GetViewportSize(ViewportSizeX, ViewportSizeY);
+    float ScreenX = ViewportSizeX / 2.f;
+    float ScreenY = ViewportSizeY / 2.f;
+
+    FVector WorldLocation;
+    FVector WorldDirection;
+
+    // 从屏幕中心点反投影到世界空间射线
+    if (!PC->DeprojectScreenPositionToWorld(ScreenX, ScreenY, WorldLocation, WorldDirection))
+    {
+        return;
+    }
+
+    FVector TraceStart = WorldLocation;
+    float TraceDistance = 300.f;
+    FVector TraceEnd = TraceStart + WorldDirection * TraceDistance;
+
+    float SweepRadius = 60.f;
+    FCollisionShape Sphere = FCollisionShape::MakeSphere(SweepRadius);
+
+    FCollisionObjectQueryParams ObjectQueryParams;
+    ObjectQueryParams.AddObjectTypesToQuery(ECC_WorldDynamic);
+
+    FCollisionQueryParams QueryParams;
+    QueryParams.AddIgnoredActor(MyPawn);
+
+    TArray<FHitResult> Hits;
+    bool bHit = GetWorld()->SweepMultiByObjectType(Hits, TraceStart, TraceEnd, FQuat::Identity, ObjectQueryParams, Sphere, QueryParams);
+
+    AActor* BestHitActor = nullptr;
+
+    for (const FHitResult& Hit : Hits)
+    {
+        AActor* HitActor = Hit.GetActor();
+        if (HitActor && HitActor->Implements<UCPGameplayInterface>())
+        {
+            if (ICPGameplayInterface::Execute_CanInteract(HitActor, MyPawn))
+            {
+                BestHitActor = HitActor;
+                break;
+            }
+        }
+    }
+
+    if (BestHitActor != FocusedActor)
+    {
+        if (InteractionWidgetInstance)
+        {
+            InteractionWidgetInstance->RemoveFromParent();
+            InteractionWidgetInstance = nullptr;
+        }
+
+        FocusedActor = BestHitActor;
+
+        if (FocusedActor && DefaultInteractionWidgetClass)
+        {
+            InteractionWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), DefaultInteractionWidgetClass);
+            if (InteractionWidgetInstance)
+            {
+                InteractionWidgetInstance->AddToViewport();
+            }
+        }
+    }
+    
 }
-
 void UCPInteractionComponent::PrimaryInteract()
 {
-	FCollisionObjectQueryParams ObjectQueryParams; 
-	ObjectQueryParams.AddObjectTypesToQuery(ECC_WorldDynamic);
+	if (!FocusedActor) return;
 
-	AActor* MyOwner = GetOwner();
+	APawn* MyPawn = Cast<APawn>(GetOwner());
+	if (!MyPawn) return;
 
-	FVector EyeLocation;
-	FRotator EyeRotation;
-	MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation);
-
-	FVector End = EyeLocation + (EyeRotation.Vector() * 1000.0f);
-
-	TArray<FHitResult> Hits;
-
-	float Radius = 30.0f;
-	
-	FCollisionShape Shape;
-	Shape.SetSphere(Radius);
-	
-	bool bBlockingHit = GetWorld()->SweepMultiByObjectType(Hits, EyeLocation, End, FQuat::Identity, ObjectQueryParams, Shape);
-	
-	FColor LineColor = bBlockingHit ? FColor::Green : FColor::Red;
-	
-	for (FHitResult Hit : Hits)
+	if (FocusedActor->Implements<UCPGameplayInterface>())
 	{
-		AActor* HitActor = Hit.GetActor();
-		if (HitActor)
-		{
-			if (HitActor->Implements<UCPGameplayInterface>())
-			{
-				APawn* MyPawn = Cast<APawn>(MyOwner);
-			
-				ICPGameplayInterface::Execute_Interact(HitActor, MyPawn);
-				break;
-			}
-		}
-
-		DrawDebugSphere(GetWorld(), Hit.ImpactPoint, Radius, 32,  LineColor, false, 2.0f);
+		ICPGameplayInterface::Execute_Interact(FocusedActor, MyPawn);
 	}
-	
-	DrawDebugLine(GetWorld(), EyeLocation, End, LineColor, false, 2.0f, 0, 2.0f);
 }

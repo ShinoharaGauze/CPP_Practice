@@ -22,4 +22,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	float Damage;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Effects")
+	TSubclassOf<UCameraShakeBase> CameraShake;
 };

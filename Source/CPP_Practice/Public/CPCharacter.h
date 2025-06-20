@@ -27,7 +27,7 @@ protected:
 	TSubclassOf<AActor> ESkillProjectileClass;
 
 	UPROPERTY(EditAnywhere, Category = "Attack")
-	TSubclassOf<AActor> QSkillProjectileClass;
+	TSubclassOf<AActor>  QSkillProjectileClass;
 	
 	UPROPERTY(EditAnywhere, Category = "Attack")
 	UAnimMontage* AttackAnim;
@@ -51,9 +51,9 @@ protected:
 
 	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UCPAttributeComponent> AttributeComp;
-	
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Effects")
+	TObjectPtr<UParticleSystem> HandVfx;
 
 	void MoveForward(float Value);
 
@@ -73,12 +73,15 @@ protected:
 	void QSkill_TimeElapsed();
 	
 	void PrimaryInteract();
-	
-	void Jump();
+
+	virtual void Jump() override;
+
+	UFUNCTION()
+	void OnHealthChanged(AActor* InstigatorActor, UCPAttributeComponent* OwningComp, float NewHealth, float Delta);
+
+	virtual void PostInitializeComponents() override;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

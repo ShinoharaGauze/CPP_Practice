@@ -16,17 +16,21 @@ public:
 
 	void PrimaryInteract();
 	
-public:	
-	// Sets default values for this component's properties
 	UCPInteractionComponent();
 
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+protected:
+
+	UPROPERTY()
+	AActor* FocusedActor;
+
+	// 蓝图中选择要显示的交互提示 WBP
+	UPROPERTY(EditDefaultsOnly, Category="UI")
+	TSubclassOf<UUserWidget> DefaultInteractionWidgetClass;
+
+	// 运行时实例，不要暴露在编辑器中
+	UPROPERTY()
+	UUserWidget* InteractionWidgetInstance;
+	
 };

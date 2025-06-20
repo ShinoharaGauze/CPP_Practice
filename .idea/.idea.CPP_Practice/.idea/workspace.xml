@@ -13,8 +13,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8f87dea4-327d-441a-aab2-c305d2a0dc32" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CPP_Practice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CPP_Practice/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/BP_BlackholeProjectile.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/BP_BlackholeProjectile.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/Maps/TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/Maps/TestLevel.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ParagonGideon/Characters/Heroes/Gideon/Gideon_AnimBlueprint.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ParagonGideon/Characters/Heroes/Gideon/Gideon_AnimBlueprint.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,6 +170,7 @@
       <workItem from="1749718288088" duration="4036000" />
       <workItem from="1749778828885" duration="7695000" />
       <workItem from="1750037551391" duration="1569000" />
+      <workItem from="1750296673495" duration="2092000" />
     </task>
     <servers />
   </component>

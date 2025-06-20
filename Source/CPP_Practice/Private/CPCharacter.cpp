@@ -8,6 +8,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ACPCharacter::ACPCharacter()
@@ -31,18 +32,11 @@ ACPCharacter::ACPCharacter()
 	bUseControllerRotationYaw = false;
 }
 
-// Called when the game starts or when spawned
-void ACPCharacter::BeginPlay()
+void ACPCharacter::PostInitializeComponents()
 {
-	Super::BeginPlay();
-	
-}
+	Super::PostInitializeComponents();
 
-// Called every frame
-void ACPCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
+	AttributeComp->OnHealthChanged.AddDynamic(this, &ACPCharacter::OnHealthChanged);
 }
 
 // Called to bind functionality to input
@@ -159,6 +153,19 @@ void ACPCharacter::SpawnProjectile(TSubclassOf<AActor> ClassToSpawn)
 		FTransform SpawnTM = FTransform(ProjRotation, HandLocation);
 		GetWorld()->SpawnActor<AActor>(ClassToSpawn, SpawnTM, SpawnParams);
 	}
+
+	if (HandVfx)
+	{
+		UGameplayStatics::SpawnEmitterAttached(
+			HandVfx,
+			GetMesh(),                          // 父组件（角色的 SkeletalMesh）
+			TEXT("Muzzle_01"),                  // 挂载点 Socket 名（确保存在）
+			FVector::ZeroVector,                // 相对位置
+			FRotator::ZeroRotator,              // 相对旋转
+			EAttachLocation::SnapToTarget,      // 对齐方式
+			true                                // 自动销毁
+		);
+	}
 }
 
 void ACPCharacter::PrimaryInteract()
@@ -173,3 +180,20 @@ void ACPCharacter::Jump()
 {
 	Super::Jump();
 }
+
+void ACPCharacter::OnHealthChanged(AActor* InstigatorActor, UCPAttributeComponent* OwningComp, float NewHealth,
+	float Delta)
+{
+	if (Delta < 0.0f)
+	{
+		GetMesh()->SetScalarParameterValueOnMaterials("TimeToHit", GetWorld()->TimeSeconds);
+
+		if (NewHealth <= 0.0f)
+		{
+			APlayerController* PC = Cast<APlayerController>(GetController());
+			DisableInput(PC);
+		}
+	}
+}
+
+

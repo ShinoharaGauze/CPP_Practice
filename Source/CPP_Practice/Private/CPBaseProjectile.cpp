@@ -3,6 +3,8 @@
 
 #include "CPBaseProjectile.h"
 
+#include "AssetTypeActions/AssetDefinition_SoundBase.h"
+#include "Components/AudioComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -24,6 +26,10 @@ ACPBaseProjectile::ACPBaseProjectile()
 	MovementComp->bRotationFollowsVelocity = true;
 	MovementComp->bInitialVelocityInLocalSpace = true;
 	MovementComp->ProjectileGravityScale = 0.0f;
+
+	ProjectileSoundComp = CreateDefaultSubobject<UAudioComponent>("ProjectileSoundComp");
+	ProjectileSoundComp->SetupAttachment(RootComponent);
+	ProjectileSoundComp->bAutoActivate = false;
 	
 }
 
@@ -35,6 +41,11 @@ void ACPBaseProjectile::BeginPlay()
 	{
 		SphereComp->IgnoreActorWhenMoving(MyInstigator, true);
 	}
+
+	if (ProjectileSoundComp)
+	{
+		ProjectileSoundComp->Play();
+	}
 }
 
 void ACPBaseProjectile::OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
@@ -42,13 +53,22 @@ void ACPBaseProjectile::OnActorHit(UPrimitiveComponent* HitComponent, AActor* Ot
 	Explode();
 }
 
-
 // Called when the game starts or when spawned
 void ACPBaseProjectile::Explode_Implementation()
 {
-		UGameplayStatics::SpawnEmitterAtLocation(this, ImpactVFX, GetActorLocation(), GetActorRotation());
+	if (ProjectileSoundComp && ProjectileSoundComp->IsPlaying())
+	{
+		ProjectileSoundComp->Stop();
+	}
 
-		Destroy();
+	if (ExplodeSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, ExplodeSound, GetActorLocation());
+	}
+	
+	UGameplayStatics::SpawnEmitterAtLocation(this, ImpactVFX, GetActorLocation(), GetActorRotation());
+
+	Destroy();
 }
 
 void ACPBaseProjectile::PostInitializeComponents()

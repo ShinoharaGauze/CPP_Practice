@@ -3,12 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CPGameplayInterface.h"
-#include "GameFramework/Actor.h"
+#include "CPPickUpBase.h"
 #include "CPItemChest.generated.h"
 
 UCLASS()
-class CPP_PRACTICE_API ACPItemChest : public AActor, public ICPGameplayInterface
+class CPP_PRACTICE_API ACPItemChest : public ACPPickUpBase
 {
 	GENERATED_BODY()
 
@@ -17,25 +16,15 @@ public:
 	UPROPERTY(EditAnywhere)
 	float TargetPitch;
 
-	void Interact_Implementation(APawn* InstigatorPawn); 
-	
-public:	
-	// Sets default values for this actor's properties
+	// 这里覆盖基类的实现
+	virtual void Interact_Implementation(APawn* InstigatorPawn) override;
+
+	// 构造和生命周期函数
 	ACPItemChest();
 
 protected:
 
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* BaseMesh;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* LidMesh;
 	
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 };

@@ -34,6 +34,12 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UParticleSystemComponent> EffectComp;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UAudioComponent* ProjectileSoundComp;
+
+	UPROPERTY(EditDefaultsOnly)
+	USoundBase* ExplodeSound;
+
 	UFUNCTION()
 	virtual void OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 	
