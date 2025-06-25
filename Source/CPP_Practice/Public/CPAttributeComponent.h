@@ -26,7 +26,10 @@ protected:
 	float HealthMax;
 
 public:
-  
+
+	UFUNCTION(BlueprintCallable)
+	void SetHealthMax(float NewMax, bool bUpdateCurrent = false);
+	
 	UFUNCTION(BlueprintCallable)
 	bool IsAlive() const;
 	
