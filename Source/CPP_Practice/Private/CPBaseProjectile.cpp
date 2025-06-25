@@ -3,7 +3,6 @@
 
 #include "CPBaseProjectile.h"
 
-#include "AssetTypeActions/AssetDefinition_SoundBase.h"
 #include "Components/AudioComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
@@ -67,6 +66,17 @@ void ACPBaseProjectile::Explode_Implementation()
 	}
 	
 	UGameplayStatics::SpawnEmitterAtLocation(this, ImpactVFX, GetActorLocation(), GetActorRotation());
+
+	if (CameraShake)
+	{
+		UGameplayStatics::PlayWorldCameraShake(
+		this,
+		CameraShake,
+		GetActorLocation(),      // 震动来源位置
+		0.f,                     // 最小距离（震动影响范围）
+		1000.f                  // 最大距离
+		);
+	}
 
 	Destroy();
 }
