@@ -19,5 +19,12 @@ class CPP_PRACTICE_API UCPBTTask_RangedAttack : public UBTTaskNode
 protected:
 
 	UPROPERTY(EditAnywhere, Category = "AI")
+	float MaxBulletSpread;
+
+	UPROPERTY(EditAnywhere, Category = "AI")
 	TSubclassOf<AActor> ProjectileClass;
+
+public:
+
+	UCPBTTask_RangedAttack();
 };

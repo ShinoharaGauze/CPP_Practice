@@ -21,7 +21,7 @@ EBTNodeResult::Type UCPBTTask_HealingSelf::ExecuteTask(UBehaviorTreeComponent& O
 		if (UCPAttributeComponent* AttributeComp = Cast<UCPAttributeComponent>(
 			MyPawn->GetComponentByClass(UCPAttributeComponent::StaticClass())))
 		{
-			bool bHealed = AttributeComp->ApplyHealthChange(+10.0f);
+			bool bHealed = AttributeComp->ApplyHealthChange(MyPawn, +10.0f);
 			
 			return bHealed ? EBTNodeResult::Succeeded : EBTNodeResult::Failed;
 		}

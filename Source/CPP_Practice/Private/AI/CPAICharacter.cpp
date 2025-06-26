@@ -4,6 +4,7 @@
 #include "AI/CPAICharacter.h"
 
 #include "AIController.h"
+#include "BrainComponent.h"
 #include "CPAttributeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Perception/PawnSensingComponent.h"
@@ -14,6 +15,10 @@ ACPAICharacter::ACPAICharacter()
 	AttributeComp = CreateDefaultSubobject<UCPAttributeComponent>("AttributeComp");
 	
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>("PawnSensingComp");
+
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+
+	TimeToHitParamName = "TimeToHit";
 }
 
 void ACPAICharacter::PostInitializeComponents()
@@ -26,17 +31,21 @@ void ACPAICharacter::PostInitializeComponents()
 	PawnSensingComp->OnSeePawn.AddDynamic(this, &ACPAICharacter::OnPawnSeen);
 }
 
-void ACPAICharacter::OnPawnSeen(APawn* Pawn)
+void ACPAICharacter::SetTargetActor(AActor* NewTarget)
 {
 	AAIController* AIC = Cast<AAIController>(GetController());
-	if (AIC)
-	{
-		UBlackboardComponent* BBComp = AIC->GetBlackboardComponent();
+ 	if (AIC)
+ 	{
+ 		AIC->GetBlackboardComponent()->SetValueAsObject("TargetActor", NewTarget);
+ 	}
+}
 
-		BBComp->SetValueAsObject("TargetActor", Pawn);
 
-		DrawDebugString(GetWorld(), GetActorLocation(), "PLAYER SPOTTED", nullptr, FColor::White, 4.0f, true);
-	}
+void ACPAICharacter::OnPawnSeen(APawn* Pawn)
+{
+	SetTargetActor(Pawn);
+
+	DrawDebugString(GetWorld(), GetActorLocation(), "PLAYER SPOTTED", nullptr, FColor::White, 4.0f, true);
 }
 
 void ACPAICharacter::OnHealthChanged(AActor* InstigatorActor, UCPAttributeComponent* OwningComp, float NewHealth,
@@ -44,9 +53,26 @@ void ACPAICharacter::OnHealthChanged(AActor* InstigatorActor, UCPAttributeCompon
 {
 	if (Delta < 0.0f)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red,
-			FString::Printf(TEXT("[AI] %s took %.0f damage, remaining %.0f HP"),
-				*GetName(), -Delta, NewHealth));
+		if (InstigatorActor != this)
+		{
+			SetTargetActor(InstigatorActor);
+		}
+
+		GetMesh()->SetScalarParameterValueOnMaterials(TimeToHitParamName, GetWorld()->TimeSeconds);
+		
+		if (NewHealth <= 0.0f)
+		{
+			AAIController* AIC = Cast<AAIController>(GetController());
+			if (AIC)
+			{
+				AIC->GetBrainComponent()->StopLogic("Killed");
+			}
+
+			GetMesh()->SetAllBodiesSimulatePhysics(true);
+			GetMesh()->SetCollisionProfileName("Ragdoll");
+			
+			SetLifeSpan(10.0f);
+		}
 	}
 }
 

@@ -44,14 +44,35 @@ void UCPAttributeComponent::SetHealthMax(float NewMax, bool bUpdateCurrent)
 	}
 }
 
-bool UCPAttributeComponent::ApplyHealthChange(float Delta)
+bool UCPAttributeComponent::ApplyHealthChange(AActor* InstigatorActor, float Delta)
 {
 	const float OldHealth = Health;
 
 	Health = FMath::Clamp(Health + Delta, 0.0f, HealthMax);
 
 	const float ActualDelta = Health - OldHealth;
-	OnHealthChanged.Broadcast(nullptr, this, Health, ActualDelta);
+	OnHealthChanged.Broadcast(InstigatorActor, this, Health, ActualDelta);
 	
 	return ActualDelta != 0.0f;
+}
+
+UCPAttributeComponent* UCPAttributeComponent::GetAttributes(AActor* FromActor)
+{
+	if (FromActor)
+	{
+		return Cast<UCPAttributeComponent>(FromActor->GetComponentByClass(UCPAttributeComponent::StaticClass()));
+	}
+
+	return nullptr;
+}
+
+bool UCPAttributeComponent::IsActorAlive(AActor* Actor)
+{
+	UCPAttributeComponent* AttributeComp = GetAttributes(Actor);
+	if (AttributeComp)
+	{
+		return AttributeComp->IsAlive();
+	}
+
+	return false;
 }

@@ -21,7 +21,7 @@ void ACPMagicProjectile::OnActorOverlap(::UPrimitiveComponent* OverlappedCompone
 			
 		if (UCPAttributeComponent* AttributeComp = Cast<UCPAttributeComponent>(OtherActor->GetComponentByClass(UCPAttributeComponent::StaticClass())))
 		{
-			AttributeComp->ApplyHealthChange(-Damage);
+			AttributeComp->ApplyHealthChange(GetInstigator(), -Damage);
 		}
 	}
 }

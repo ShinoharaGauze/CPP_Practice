@@ -50,7 +50,7 @@ void ACPHealthPotion::Interact_Implementation(APawn* InstigatorPawn)
 
 	if (UCPAttributeComponent* AttributeComp = Cast<UCPAttributeComponent>(InstigatorPawn->GetComponentByClass(UCPAttributeComponent::StaticClass())))
 	{
-		AttributeComp->ApplyHealthChange(+HealAmount);
+		AttributeComp->ApplyHealthChange(this, +HealAmount);
 
 		// 进入冷却状态
 		SetActiveState(false);

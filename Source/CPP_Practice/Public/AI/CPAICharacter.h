@@ -21,14 +21,20 @@ public:
 
 protected:
 	
-	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "Components")
-	TObjectPtr<UCPAttributeComponent> AttributeComp;
-	
 	virtual void PostInitializeComponents() override;
+
+	UPROPERTY(VisibleAnywhere, Category = "Effects")
+	FName TimeToHitParamName;
 	
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UPawnSensingComponent* PawnSensingComp;
+		
+	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<UCPAttributeComponent> AttributeComp;
 
+	UFUNCTION()
+	void SetTargetActor(AActor* NewTarget);
+	
 	UFUNCTION()
 	void OnPawnSeen(APawn* Pawn);
 
