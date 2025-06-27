@@ -4,25 +4,12 @@
 #include "CPHealthPotion.h"
 
 #include "CPAttributeComponent.h"
+#include "CPPlayerState.h"
 
 ACPHealthPotion::ACPHealthPotion()
 {
 	// 初始状态为激活
 	ACPHealthPotion::SetActiveState(true);
-}
-
-void ACPHealthPotion::SetActiveState(bool bNewActive)
-{
-	bIsActive = bNewActive;
-
-	// 控制 Mesh 显隐
-	BaseMesh->SetVisibility(bNewActive, true);
-	BaseMesh->SetCollisionEnabled(bNewActive ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
-}
-
-void ACPHealthPotion::Respawn()
-{
-	SetActiveState(true);
 }
 
 bool ACPHealthPotion::CanInteract_Implementation(APawn* InstigatorPawn) const
@@ -38,6 +25,14 @@ bool ACPHealthPotion::CanInteract_Implementation(APawn* InstigatorPawn) const
 		return AttributeComp->GetHealth() < AttributeComp->GetHealthMax();
 	}
 
+	if (const APlayerState* PlayerState = InstigatorPawn->GetPlayerState())
+	{
+		if (const ACPPlayerState* CPPlayerState = Cast<ACPPlayerState>(PlayerState))
+		{
+			return CPPlayerState->GetCredits() >= CreditCost;
+		}
+	}
+	
 	return false;
 }
 
@@ -50,6 +45,23 @@ void ACPHealthPotion::Interact_Implementation(APawn* InstigatorPawn)
 
 	if (UCPAttributeComponent* AttributeComp = Cast<UCPAttributeComponent>(InstigatorPawn->GetComponentByClass(UCPAttributeComponent::StaticClass())))
 	{
+		if (APlayerState* PlayerState = InstigatorPawn->GetPlayerState())
+		{
+			if (ACPPlayerState* CPPlayerState = Cast<ACPPlayerState>(PlayerState))
+			{
+				// 再次判断，保险起见
+				if (CPPlayerState->GetCredits() >= CreditCost)
+				{
+					CPPlayerState->AddCredits(-CreditCost);
+				}
+				else
+				{
+					// 不足积分，不进行治疗
+					return;
+				}
+			}
+		}
+		
 		AttributeComp->ApplyHealthChange(this, +HealAmount);
 
 		// 进入冷却状态

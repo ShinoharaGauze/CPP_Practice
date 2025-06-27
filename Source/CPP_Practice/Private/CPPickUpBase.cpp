@@ -23,5 +23,16 @@ bool ACPPickUpBase::CanInteract_Implementation(APawn* InstigatorPawn) const
 void ACPPickUpBase::SetActiveState(bool bNewActive)
 {
 	bIsActive = bNewActive;
+
+	if (BaseMesh)
+	{
+		BaseMesh->SetVisibility(bNewActive, true);
+		BaseMesh->SetCollisionEnabled(bNewActive ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
+	}
+}
+
+void ACPPickUpBase::Respawn()
+{
+	SetActiveState(true);
 }
 

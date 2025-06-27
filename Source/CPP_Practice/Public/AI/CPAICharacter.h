@@ -24,6 +24,7 @@ protected:
 	
 	virtual void PostInitializeComponents() override;
 
+	UPROPERTY()
 	UCPWorldUserWidget* ActiveHealthBar;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
@@ -37,6 +38,9 @@ protected:
 		
 	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UCPAttributeComponent> AttributeComp;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Credits")
+	float Credit = 10.0f;
 
 	UFUNCTION()
 	void SetTargetActor(AActor* NewTarget);
@@ -46,5 +50,9 @@ protected:
 
 	UFUNCTION()
 	void OnHealthChanged(AActor* InstigatorActor, UCPAttributeComponent* OwningComp, float NewHealth, float Delta);
+
+public:
+	UFUNCTION(BlueprintCallable, Category = "Credits")
+	float GetCredit() const { return Credit; }
 
 };

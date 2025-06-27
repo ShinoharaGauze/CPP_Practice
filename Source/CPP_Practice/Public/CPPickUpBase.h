@@ -15,9 +15,17 @@ class CPP_PRACTICE_API ACPPickUpBase : public AActor, public ICPGameplayInterfac
 public:	
 	// Sets default values for this actor's properties
 	ACPPickUpBase();
-	
-	virtual void Interact_Implementation(APawn* InstigatorPawn) override;
-	virtual bool CanInteract_Implementation(APawn* InstigatorPawn) const override;
+
+	virtual void SetActiveState(bool bIsActive);
+
+	UFUNCTION(BlueprintCallable, Category = "Pickup")
+	virtual void Respawn();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pickup")
+	bool CanInteract(APawn* InstigatorPawn) const;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pickup")
+	void Interact(APawn* InstigatorPawn);
 
 protected:
 	
@@ -27,5 +35,5 @@ protected:
 	UPROPERTY()
 	bool bIsActive = true;
 
-	virtual void SetActiveState(bool bIsActive);
+
 };

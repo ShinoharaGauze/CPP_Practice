@@ -29,9 +29,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Potion")
 	float HealAmount = 50.0f;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Potion")
+	float CreditCost = 30.0f;
+
 	FTimerHandle TimerHandle_Respawn;
-	
-	virtual void SetActiveState(bool bNewActive) override;
-	
-	void Respawn();
 };

@@ -5,6 +5,7 @@
 
 #include "CPAttributeComponent.h"
 #include "CPCharacter.h"
+#include "CPPlayerState.h"
 #include "EngineUtils.h"
 #include "AI/CPAICharacter.h"
 #include "EnvironmentQuery/EnvQueryManager.h"
@@ -108,11 +109,17 @@ void ACPGameModeBase::RespawnPlayerElapsed(AController* Controller)
 	}
 }
 
+void ACPGameModeBase::OnPickupSpawnQueryFinished(UEnvQueryInstanceBlueprintWrapper* QueryInstance,
+	EEnvQueryStatus::Type Status)
+{
+	
+}
+
 void ACPGameModeBase::OnActorKilled(AActor* VictimActor, AActor* Killer)
 {
-	ACPCharacter* Player = Cast<ACPCharacter>(VictimActor);
-	if (Player)
+	if (ACPCharacter* Player = Cast<ACPCharacter>(VictimActor))
 	{
+		// 玩家死亡 → 延迟重生
 		FTimerHandle TimerHandle_RespawnDelay;
 
 		FTimerDelegate Delegate;
@@ -121,7 +128,22 @@ void ACPGameModeBase::OnActorKilled(AActor* VictimActor, AActor* Killer)
 		float RespawnDelay = 2.0f;
 		GetWorldTimerManager().SetTimer(TimerHandle_RespawnDelay, Delegate, RespawnDelay, false);
 	}
+	else if (ACPAICharacter* AIPawn = Cast<ACPAICharacter>(VictimActor))
+	{
+		// AI 小兵被击杀 → 奖励击杀者
+		APawn* KillerPawn = Cast<APawn>(Killer);
+		if (KillerPawn)
+		{
+			if (ACPPlayerState* CPPlayerState = KillerPawn->GetPlayerState<ACPPlayerState>())
+			{
+				float RewardAmount = AIPawn->GetCredit();
+				CPPlayerState->AddCredits(RewardAmount);
 
+				UE_LOG(LogTemp, Log, TEXT("Granted %.2f credits to %s for killing AI"), RewardAmount, *CPPlayerState->GetPlayerName());
+			}
+		}
+	}
+	
 	UE_LOG(LogTemp, Log, TEXT("OnActorKilled: Victim: %s, Killer: %s"), *GetNameSafe(VictimActor), *GetNameSafe(Killer));
 }
 
