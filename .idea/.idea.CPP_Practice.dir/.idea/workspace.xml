@@ -9,24 +9,30 @@
   <component name="ChangeListManager">
     <list default="true" id="65846d85-43f7-4c88-a000-293a598dde5c" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CPP_Practice.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CPP_Practice.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CPP_Practice.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/CPP_Practice.uproject" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/AI/BP_MinionRanged.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/AI/BP_MinionRanged.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/AI/BT_MinionRanged.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/AI/BT_MinionRanged.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/AI/EQ_FindBotSpawn.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/AI/EQ_FindBotSpawn.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/AI/EQ_FindSafeLocation.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/AI/EQ_FindSafeLocation.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/BP_GameMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/BP_GameMode.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/BP_MagicProjectile.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/BP_MagicProjectile.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/BP_PlayerCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/BP_PlayerCharacter.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/Maps/TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/Maps/TestLevel.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/Materials/MF_HitFlash.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/Materials/MF_HitFlash.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_PlayerHealth.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_PlayerHealth.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/AI/CPAICharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/AI/CPAICharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/AI/CPBTService_CheckLowHealth.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/AI/CPBTService_CheckLowHealth.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/AI/CPBTTask_HealingSelf.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/AI/CPBTTask_HealingSelf.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/AI/CPBTTask_RangedAttack.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/AI/CPBTTask_RangedAttack.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPAttributeComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPAttributeComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPHealthPotion.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPHealthPotion.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPGameModeBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPGameModeBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPInteractionComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPInteractionComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPMagicProjectile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPMagicProjectile.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPWorldUserWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPWorldUserWidget.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/AI/CPAICharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/AI/CPAICharacter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/AI/CPBTTask_RangedAttack.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/AI/CPBTTask_RangedAttack.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/AI/CPBTService_CheckLowHealth.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/AI/CPBTService_CheckLowHealth.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPAttributeComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPAttributeComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPGameModeBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPGameModeBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPMagicProjectile.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPMagicProjectile.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPWorldUserWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPWorldUserWidget.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,12 +46,22 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Private/CPWorldUserWidget.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Public/CPWorldUserWidget.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Private/AI/CPAICharacter.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Private/AI/CPBTTask_RangedAttack.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Private/CPWorldUserWidget.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Public/AI/CPAICharacter.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Public/AI/CPBTTask_RangedAttack.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Public/CPWorldUserWidget.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Plugins/VirtualProduction/Takes/Source/TakeRecorder/Private/Widgets/TakeRecorderWidgetConstants.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Runtime/Engine/Classes/Components/PrimitiveComponent.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Runtime/Engine/Private/Components/PrimitiveComponent.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Runtime/Engine/Private/Pawn.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Runtime/Engine/Public/TimerManager.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Runtime/UMG/Private/Components/Widget.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Runtime/UMG/Public/Blueprint/UserWidget.h" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="Toolset" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -158,7 +174,8 @@
       <workItem from="1750729135600" duration="15374000" />
       <workItem from="1750816929219" duration="18869000" />
       <workItem from="1750901749190" duration="11528000" />
-      <workItem from="1750917351999" duration="7769000" />
+      <workItem from="1750917351999" duration="12808000" />
+      <workItem from="1750987948304" duration="16754000" />
     </task>
     <servers />
   </component>

@@ -21,10 +21,8 @@ void UCPBTService_CheckLowHealth::TickNode(UBehaviorTreeComponent& OwnerComp, ui
 			if ensure((AIPawn))
 			{
 				UCPAttributeComponent* AttributeComp = AIPawn->FindComponentByClass<UCPAttributeComponent>();
-
-				const float HealthPercent = AttributeComp->GetHealth() / AttributeComp->GetHealthMax();
-
-				const bool bIsLowHealth = HealthPercent <= 0.3f;
+				
+				const bool bIsLowHealth = AttributeComp->GetHealth() / AttributeComp->GetHealthMax() <= LowHealthFraction;
 
 				BlackboardComp->SetValueAsBool(LowHealthKey.SelectedKeyName, bIsLowHealth);
 			}

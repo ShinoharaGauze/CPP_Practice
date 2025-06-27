@@ -34,6 +34,9 @@ protected:
 public:
 
 	UFUNCTION(BlueprintCallable)
+	bool Kill(AActor* InstigatorActor);
+	
+	UFUNCTION(BlueprintCallable)
 	void SetHealthMax(float NewMax, bool bUpdateCurrent = false);
 	
 	UFUNCTION(BlueprintCallable)

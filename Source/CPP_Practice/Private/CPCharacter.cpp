@@ -60,6 +60,11 @@ void ACPCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAction("PrimaryInteract", IE_Pressed, this, &ACPCharacter::PrimaryInteract);
 }
 
+void ACPCharacter::HealSelf(float Amount /* = 100 */)
+{
+	AttributeComp->ApplyHealthChange(this, Amount);
+}
+
 void ACPCharacter::MoveForward(float Value)
 {
 	FRotator ControlRot = GetControlRotation();
@@ -194,6 +199,11 @@ void ACPCharacter::OnHealthChanged(AActor* InstigatorActor, UCPAttributeComponen
 			DisableInput(PC);
 		}
 	}
+}
+
+FVector ACPCharacter::GetPawnViewLocation() const
+{
+	return CameraComp->GetComponentLocation();
 }
 
 

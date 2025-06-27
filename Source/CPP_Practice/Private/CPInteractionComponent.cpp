@@ -6,6 +6,8 @@
 #include "CPGameplayInterface.h"
 #include "Blueprint/UserWidget.h"
 
+static TAutoConsoleVariable CVarDebugDrawInteraction(TEXT("cp.InteractionDebugDraw"), false, TEXT("Enable Debug Lines for Interact Component."), ECVF_Cheat);
+
 UCPInteractionComponent::UCPInteractionComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
@@ -16,6 +18,8 @@ void UCPInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType
 {
     Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+    bool bDebugDraw = CVarDebugDrawInteraction.GetValueOnGameThread();
+    
     AActor* Owner = GetOwner();
     APawn* MyPawn = Cast<APawn>(Owner);
     if (!MyPawn) return;
@@ -56,8 +60,15 @@ void UCPInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType
 
     AActor* BestHitActor = nullptr;
 
+    FColor LineColor = bHit ? FColor::Green : FColor::Red;
+    
     for (const FHitResult& Hit : Hits)
     {
+        if (bDebugDraw)
+        {
+            DrawDebugSphere(GetWorld(), Hit.ImpactPoint, SweepRadius, 32, LineColor, false, 2.0f);
+        }
+        
         AActor* HitActor = Hit.GetActor();
         if (HitActor && HitActor->Implements<UCPGameplayInterface>())
         {
@@ -67,6 +78,11 @@ void UCPInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType
                 break;
             }
         }
+    }
+
+    if (bDebugDraw)
+    {
+        DrawDebugLine(GetWorld(), TraceStart, TraceEnd, LineColor, false, 2.0f, 0, 2.0f);
     }
 
     if (BestHitActor != FocusedActor)
@@ -90,6 +106,7 @@ void UCPInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType
     }
     
 }
+
 void UCPInteractionComponent::PrimaryInteract()
 {
 	if (!FocusedActor) return;

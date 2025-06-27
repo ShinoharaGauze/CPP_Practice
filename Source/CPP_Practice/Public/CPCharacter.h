@@ -33,12 +33,6 @@ protected:
 	UAnimMontage* AttackAnim;
 
 	FTimerHandle TimerHandle_PrimaryAttack;
-	
-public:
-	// Sets default values for this character's properties
-	ACPCharacter();
-
-protected:
 
 	UPROPERTY(visibleAnywhere, Category = "Components")
 	TObjectPtr<USpringArmComponent> SpringArmComp;
@@ -78,13 +72,17 @@ protected:
 
 	UFUNCTION()
 	void OnHealthChanged(AActor* InstigatorActor, UCPAttributeComponent* OwningComp, float NewHealth, float Delta);
-
+	
+	virtual FVector GetPawnViewLocation() const override;
+	
 	virtual void PostInitializeComponents() override;
 
 public:	
-	
-	// Called to bind functionality to input
+
+	ACPCharacter();
+
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	
+	UFUNCTION(Exec)
+	void HealSelf(float Amount = 100);	
 };

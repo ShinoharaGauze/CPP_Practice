@@ -3,7 +3,10 @@
 
 #include "CPAttributeComponent.h"
 
-// Sets default values for this component's properties
+#include "CPGameModeBase.h"
+
+static TAutoConsoleVariable CVarDamageMultiplier(TEXT("cp.DamageMultiplier"), 1.0f, TEXT("Global Damage Modifier for Attribute Component."), ECVF_Cheat);
+
 UCPAttributeComponent::UCPAttributeComponent()
 {
 	HealthMax = 100;
@@ -23,6 +26,11 @@ float UCPAttributeComponent::GetHealth() const
 float UCPAttributeComponent::GetHealthMax() const
 {
 	return HealthMax;
+}
+
+bool UCPAttributeComponent::Kill(AActor* InstigatorActor)
+{
+	return ApplyHealthChange(InstigatorActor, -GetHealthMax());
 }
 
 void UCPAttributeComponent::SetHealthMax(float NewMax, bool bUpdateCurrent)
@@ -46,12 +54,33 @@ void UCPAttributeComponent::SetHealthMax(float NewMax, bool bUpdateCurrent)
 
 bool UCPAttributeComponent::ApplyHealthChange(AActor* InstigatorActor, float Delta)
 {
+	if (!GetOwner()->CanBeDamaged() && Delta < 0.0f)
+	{
+		return false;
+	}
+
+	if (Delta < 0.0f)
+	{
+		float DamageMultiplier = CVarDamageMultiplier.GetValueOnGameThread();
+
+		Delta *= DamageMultiplier;
+	}
+	
 	const float OldHealth = Health;
 
 	Health = FMath::Clamp(Health + Delta, 0.0f, HealthMax);
 
 	const float ActualDelta = Health - OldHealth;
 	OnHealthChanged.Broadcast(InstigatorActor, this, Health, ActualDelta);
+
+	if (ActualDelta < 0.0f && Health == 0.0f)
+	{
+		ACPGameModeBase* GM = GetWorld()->GetAuthGameMode<ACPGameModeBase>();
+		if (GM)
+		{
+			GM->OnActorKilled(GetOwner(), InstigatorActor);
+		}
+	}
 	
 	return ActualDelta != 0.0f;
 }

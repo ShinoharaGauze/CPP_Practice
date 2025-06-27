@@ -6,7 +6,10 @@
 #include "AIController.h"
 #include "BrainComponent.h"
 #include "CPAttributeComponent.h"
+#include "CPWorldUserWidget.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Perception/PawnSensingComponent.h"
 
 // Sets default values
@@ -18,6 +21,9 @@ ACPAICharacter::ACPAICharacter()
 
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldDynamic, ECR_Ignore);
+	GetMesh()->SetGenerateOverlapEvents(true);
+	
 	TimeToHitParamName = "TimeToHit";
 }
 
@@ -58,6 +64,16 @@ void ACPAICharacter::OnHealthChanged(AActor* InstigatorActor, UCPAttributeCompon
 			SetTargetActor(InstigatorActor);
 		}
 
+		if (ActiveHealthBar == nullptr)
+		{
+			ActiveHealthBar = CreateWidget<UCPWorldUserWidget>(GetWorld(), HealthBarWidgetClass);
+			if (ActiveHealthBar)
+			{
+				ActiveHealthBar->AttachedActor = this;
+				ActiveHealthBar->AddToViewport();
+			}
+		}
+		
 		GetMesh()->SetScalarParameterValueOnMaterials(TimeToHitParamName, GetWorld()->TimeSeconds);
 		
 		if (NewHealth <= 0.0f)
@@ -70,6 +86,9 @@ void ACPAICharacter::OnHealthChanged(AActor* InstigatorActor, UCPAttributeCompon
 
 			GetMesh()->SetAllBodiesSimulatePhysics(true);
 			GetMesh()->SetCollisionProfileName("Ragdoll");
+
+			GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			GetCharacterMovement()->DisableMovement();
 			
 			SetLifeSpan(10.0f);
 		}

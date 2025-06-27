@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "CPAICharacter.generated.h"
 
+class UCPWorldUserWidget;
 class UWidgetComponent;
 class UCPAttributeComponent;
 class UPawnSensingComponent;
@@ -23,6 +24,11 @@ protected:
 	
 	virtual void PostInitializeComponents() override;
 
+	UCPWorldUserWidget* ActiveHealthBar;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<UUserWidget> HealthBarWidgetClass;
+	
 	UPROPERTY(VisibleAnywhere, Category = "Effects")
 	FName TimeToHitParamName;
 	
