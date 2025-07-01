@@ -16,6 +16,8 @@ public:
 	// Sets default values for this actor's properties
 	ACPPickUpBase();
 
+	virtual float GetBottomOffset() const;
+	
 	virtual void SetActiveState(bool bIsActive);
 
 	UFUNCTION(BlueprintCallable, Category = "Pickup")

@@ -3,6 +3,7 @@
 
 #include "CPCharacter.h"
 
+#include "CPActionComponent.h"
 #include "CPAttributeComponent.h"
 #include "CPInteractionComponent.h"
 #include "Camera/CameraComponent.h"
@@ -26,6 +27,8 @@ ACPCharacter::ACPCharacter()
 	InteractionComp = CreateDefaultSubobject<UCPInteractionComponent>("InteractionComp");
 
 	AttributeComp = CreateDefaultSubobject<UCPAttributeComponent>("AttributeComp");
+
+	ActionComp = CreateDefaultSubobject<UCPActionComponent>("ActionComp");
 	
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	
@@ -39,7 +42,6 @@ void ACPCharacter::PostInitializeComponents()
 	AttributeComp->OnHealthChanged.AddDynamic(this, &ACPCharacter::OnHealthChanged);
 }
 
-// Called to bind functionality to input
 void ACPCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -56,6 +58,8 @@ void ACPCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAction("ESkill", IE_Pressed, this, &ACPCharacter::ESkill);
 	PlayerInputComponent->BindAction("QSkill", IE_Pressed, this, &ACPCharacter::QSkill);
 
+	PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &ACPCharacter::SprintStart);
+	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &ACPCharacter::SprintStop);
 	
 	PlayerInputComponent->BindAction("PrimaryInteract", IE_Pressed, this, &ACPCharacter::PrimaryInteract);
 }
@@ -85,92 +89,29 @@ void ACPCharacter::MoveRight(float Value)
 	AddMovementInput(RightVector, Value);
 }
 
+void ACPCharacter::SprintStart()
+{
+	ActionComp->StartActionByName(this, "Sprint");
+}
+
+void ACPCharacter::SprintStop()
+{
+	ActionComp->StopActionByName(this, "Sprint");
+}
+
 void ACPCharacter::PrimaryAttack()
 {
-	PlayAnimMontage(AttackAnim);
-
-	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &ACPCharacter::PrimaryAttack_TimeElapsed, 0.2f);
+	ActionComp->StartActionByName(this, "PrimaryAttack");
 }
 
 void ACPCharacter::ESkill()
 {
-	PlayAnimMontage(AttackAnim);
-
-	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &ACPCharacter::ESkill_TimeElapsed, 0.2f);
+	ActionComp->StartActionByName(this, "Blackhole");
 }
 
 void ACPCharacter::QSkill()
 {
-	PlayAnimMontage(AttackAnim);
-
-	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &ACPCharacter::QSkill_TimeElapsed, 0.2f);
-}
-
-void ACPCharacter::PrimaryAttack_TimeElapsed()
-{
-	SpawnProjectile(AttackProjectileClass);
-}
-
-void ACPCharacter::ESkill_TimeElapsed()
-{
-	SpawnProjectile(ESkillProjectileClass);
-}
-
-void ACPCharacter::QSkill_TimeElapsed()
-{
-	SpawnProjectile(QSkillProjectileClass);
-}
-
-void ACPCharacter::SpawnProjectile(TSubclassOf<AActor> ClassToSpawn)
-{
-	if (ensureAlways(ClassToSpawn))
-	{
-		FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
-
-		FActorSpawnParameters SpawnParams;
-		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		SpawnParams.Instigator = this;
-
-		FCollisionShape Shape;
-		Shape.SetSphere(20.0f);
-
-		FCollisionQueryParams Params;
-		Params.AddIgnoredActor(this);
-
-		FCollisionObjectQueryParams ObjParams;
-		ObjParams.AddObjectTypesToQuery(ECC_WorldDynamic);
-		ObjParams.AddObjectTypesToQuery(ECC_WorldStatic);
-		ObjParams.AddObjectTypesToQuery(ECC_Pawn);
-
-		FVector TraceStart = CameraComp->GetComponentLocation();
-
-		FVector TraceEnd = CameraComp->GetComponentLocation() + (GetControlRotation().Vector() * 5000);
-
-		FHitResult Hit;
-
-		if (GetWorld()->SweepSingleByObjectType(Hit, TraceStart, TraceEnd, FQuat::Identity, ObjParams, Shape, Params))
-		{
-			TraceEnd = Hit.ImpactPoint;
-		}
-
-		FRotator ProjRotation = FRotationMatrix::MakeFromX(TraceEnd - HandLocation).Rotator();
-
-		FTransform SpawnTM = FTransform(ProjRotation, HandLocation);
-		GetWorld()->SpawnActor<AActor>(ClassToSpawn, SpawnTM, SpawnParams);
-	}
-
-	if (HandVfx)
-	{
-		UGameplayStatics::SpawnEmitterAttached(
-			HandVfx,
-			GetMesh(),                          // 父组件（角色的 SkeletalMesh）
-			TEXT("Muzzle_01"),                  // 挂载点 Socket 名（确保存在）
-			FVector::ZeroVector,                // 相对位置
-			FRotator::ZeroRotator,              // 相对旋转
-			EAttachLocation::SnapToTarget,      // 对齐方式
-			true                                // 自动销毁
-		);
-	}
+	ActionComp->StartActionByName(this, "Teleport");
 }
 
 void ACPCharacter::PrimaryInteract()

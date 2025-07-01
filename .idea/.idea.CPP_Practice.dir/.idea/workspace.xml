@@ -9,19 +9,20 @@
   <component name="ChangeListManager">
     <list default="true" id="65846d85-43f7-4c88-a000-293a598dde5c" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CPP_Practice.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CPP_Practice.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CPP_Practice.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/CPP_Practice.uproject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultInput.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultInput.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/AI/EQ_PickUpSpawnLocations.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/BP_GameMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/BP_GameMode.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/BP_MagicProjectile.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/BP_MagicProjectile.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/BP_PlayerCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/BP_PlayerCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/BP_TeleportProjectile.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/BP_TeleportProjectile.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/Maps/TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/Maps/TestLevel.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_Credits.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_Credits.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_PlayerHealth.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_PlayerHealth.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPCharacter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPGameModeBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPGameModeBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPHealthPotion.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPHealthPotion.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPPickUpBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPPickUpBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPPlayerState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPPlayerState.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/AI/CPAICharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/AI/CPAICharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPCharacter.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPGameModeBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPGameModeBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPHealthPotion.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPHealthPotion.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPPickUpBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPPickUpBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPPlayerState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPPlayerState.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,12 +38,23 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Private/AI/CPAICharacter.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Private/AI/CPBTTask_RangedAttack.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Private/CPAction.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Private/CPActionComponent.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Private/CPGameModeBase.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Private/CPPickUpBase.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Private/CPWorldUserWidget.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Public/AI/CPAICharacter.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Public/AI/CPBTTask_RangedAttack.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Public/CPAction.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Public/CPActionComponent.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Public/CPGameModeBase.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Public/CPPickUpBase.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/CPP_Practice/Public/CPWorldUserWidget.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Plugins/VirtualProduction/Takes/Source/TakeRecorder/Private/Widgets/TakeRecorderWidgetConstants.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Editor/SequencerCore/Private/TimeToPixel.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Runtime/Core/Public/Virtualization/VirtualizationSystem.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Runtime/Engine/Classes/Components/PrimitiveComponent.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Runtime/Engine/Classes/GameFramework/Character.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Runtime/Engine/Private/Components/PrimitiveComponent.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Runtime/Engine/Private/Pawn.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Runtime/Engine/Public/TimerManager.h" root0="FORCE_HIGHLIGHTING" />
@@ -165,6 +177,10 @@
       <workItem from="1750901749190" duration="11528000" />
       <workItem from="1750917351999" duration="12808000" />
       <workItem from="1750987948304" duration="24631000" />
+      <workItem from="1751247401437" duration="5591000" />
+      <workItem from="1751258642096" duration="11738000" />
+      <workItem from="1751333296129" duration="128000" />
+      <workItem from="1751333707515" duration="2743000" />
     </task>
     <servers />
   </component>

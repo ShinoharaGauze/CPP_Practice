@@ -29,14 +29,17 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	UCurveFloat* DifficultyCurve;
 
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	float SpawnTimerInterval;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Pickups")
-	UEnvQuery* PickupSpawnQuery;
+	UEnvQuery* SpawnPickupQuery;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Pickups")
 	TArray<TSubclassOf<AActor>> PickupClasses;
 
-	UPROPERTY(EditDefaultsOnly, Category = "AI")
-	float SpawnTimerInterval;
+	UPROPERTY(EditDefaultsOnly, Category = "Pickups")
+	int32 MaxPickupSpawnCount = 20;
 		
 	FTimerHandle TimerHandle_SpawnBots;
 
@@ -44,13 +47,13 @@ protected:
 	void SpawnBotTimerElapsed();
 
 	UFUNCTION()
-	void OnQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryInstance, EEnvQueryStatus::Type QueryStatus);
+	void OnSpawnBotQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryInstance, EEnvQueryStatus::Type QueryStatus);
 
 	UFUNCTION()
 	void RespawnPlayerElapsed(AController* Controller);
 
 	UFUNCTION()
-	void OnPickupSpawnQueryFinished(UEnvQueryInstanceBlueprintWrapper* QueryInstance, EEnvQueryStatus::Type Status);
+	void OnSpawnPickupQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryInstance, EEnvQueryStatus::Type QueryStatus);
 	
 public:
 

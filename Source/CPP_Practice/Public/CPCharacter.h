@@ -7,6 +7,7 @@
 #include "CPCharacter.generated.h"
 
 
+class UCPActionComponent;
 class UCPAttributeComponent;
 class UCPInteractionComponent;
 class UCameraComponent;
@@ -19,20 +20,6 @@ class CPP_PRACTICE_API ACPCharacter : public ACharacter
 	GENERATED_BODY()
 
 protected:
-	
-	UPROPERTY(EditAnywhere, Category = "Attack")
-	TSubclassOf<AActor> AttackProjectileClass;
-
-	UPROPERTY(EditAnywhere, Category = "Attack")
-	TSubclassOf<AActor> ESkillProjectileClass;
-
-	UPROPERTY(EditAnywhere, Category = "Attack")
-	TSubclassOf<AActor>  QSkillProjectileClass;
-	
-	UPROPERTY(EditAnywhere, Category = "Attack")
-	UAnimMontage* AttackAnim;
-
-	FTimerHandle TimerHandle_PrimaryAttack;
 
 	UPROPERTY(visibleAnywhere, Category = "Components")
 	TObjectPtr<USpringArmComponent> SpringArmComp;
@@ -46,25 +33,22 @@ protected:
 	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UCPAttributeComponent> AttributeComp;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Effects")
-	TObjectPtr<UParticleSystem> HandVfx;
+	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<UCPActionComponent> ActionComp;
 
 	void MoveForward(float Value);
 
 	void MoveRight(float Value);
+
+	void SprintStart();
+
+	void SprintStop();
 
 	void PrimaryAttack();
 
 	void ESkill();
 
 	void QSkill();
-	void SpawnProjectile(TSubclassOf<AActor> ClassToSpawn);
-
-	void PrimaryAttack_TimeElapsed();
-
-	void ESkill_TimeElapsed();
-
-	void QSkill_TimeElapsed();
 	
 	void PrimaryInteract();
 

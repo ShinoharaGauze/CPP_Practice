@@ -10,6 +10,17 @@ ACPPickUpBase::ACPPickUpBase()
 	RootComponent = BaseMesh;
 }
 
+float ACPPickUpBase::GetBottomOffset() const
+{
+	if (BaseMesh)
+	{
+		FVector Origin, BoxExtent;
+		BaseMesh->GetLocalBounds(Origin, BoxExtent);
+		return Origin.Z - BoxExtent.Z; // 底部相对原点偏移（负数）
+	}
+	return 0.f;
+}
+
 void ACPPickUpBase::Interact_Implementation(APawn* InstigatorPawn)
 {
 	// 空实现，子类 override 实际行为
