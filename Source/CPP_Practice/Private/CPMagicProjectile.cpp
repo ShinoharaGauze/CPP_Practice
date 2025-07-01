@@ -3,9 +3,10 @@
 
 #include "CPMagicProjectile.h"
 
-#include "CPAttributeComponent.h"
+#include "CPActionComponent.h"
 #include "CPGameplayFunctionLibrary.h"
 #include "Components/SphereComponent.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 
 ACPMagicProjectile::ACPMagicProjectile()
 {
@@ -17,7 +18,16 @@ ACPMagicProjectile::ACPMagicProjectile()
 void ACPMagicProjectile::OnActorOverlap(::UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (OtherActor && OtherActor != GetInstigator())
-	{
+	{ 
+		UCPActionComponent* ActionComp = Cast<UCPActionComponent>(OtherActor->GetComponentByClass(UCPActionComponent::StaticClass()));
+		if (ActionComp && ActionComp->ActiveGameplayTags.HasTag(ParryTag))
+		{
+			MovementComp->Velocity = -MovementComp->Velocity;
+
+			SetInstigator(Cast<APawn>(OtherActor));
+			return;
+		}
+		
 		if (UCPGameplayFunctionLibrary::ApplyDirectionalDamage(GetInstigator(), OtherActor, DamageAmount, SweepResult))
 		{
 			Explode();

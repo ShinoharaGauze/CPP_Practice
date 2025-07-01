@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "CPAICharacter.generated.h"
 
+class UCPActionComponent;
 class UCPWorldUserWidget;
 class UWidgetComponent;
 class UCPAttributeComponent;
@@ -38,6 +39,9 @@ protected:
 		
 	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UCPAttributeComponent> AttributeComp;
+
+	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<UCPActionComponent> ActionComp;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Credits")
 	float Credit = 10.0f;

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "CPBaseProjectile.h"
+#include "GameplayTagContainer.h"
 #include "CPMagicProjectile.generated.h"
 
 /**
@@ -22,6 +23,9 @@ protected:
 	UFUNCTION()
 	void OnActorOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	FGameplayTag ParryTag;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	float DamageAmount;
 };

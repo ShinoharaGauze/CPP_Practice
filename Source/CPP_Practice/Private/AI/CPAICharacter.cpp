@@ -5,6 +5,7 @@
 
 #include "AIController.h"
 #include "BrainComponent.h"
+#include "CPActionComponent.h"
 #include "CPAttributeComponent.h"
 #include "CPWorldUserWidget.h"
 #include "BehaviorTree/BlackboardComponent.h"
@@ -16,6 +17,8 @@
 ACPAICharacter::ACPAICharacter()
 {
 	AttributeComp = CreateDefaultSubobject<UCPAttributeComponent>("AttributeComp");
+
+	ActionComp = CreateDefaultSubobject<UCPActionComponent>("ActionComp");
 	
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>("PawnSensingComp");
 

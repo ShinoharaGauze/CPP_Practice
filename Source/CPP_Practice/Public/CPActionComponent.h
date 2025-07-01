@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "Components/ActorComponent.h"
 #include "CPActionComponent.generated.h"
 
@@ -14,7 +15,11 @@ class CPP_PRACTICE_API UCPActionComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tags")
+	FGameplayTagContainer ActiveGameplayTags;
+	
 	UCPActionComponent();
 
 	UFUNCTION(BlueprintCallable, Category = "Action")
