@@ -21,7 +21,7 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Credits")
-	float CreditAmount = 5.0f;
+	float CreditAmount = 25.0f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Credits")
 	float CooldownTime = 5.0f;

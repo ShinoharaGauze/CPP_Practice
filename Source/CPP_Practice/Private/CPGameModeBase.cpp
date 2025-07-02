@@ -17,7 +17,7 @@ static TAutoConsoleVariable CVarSpawnBots(TEXT("cp.SpawnBots"), true, TEXT("Enab
 ACPGameModeBase::ACPGameModeBase()
 {
 	SpawnTimerInterval = 2.0f;
-	MaxPickupSpawnCount = 10;
+	MaxPickupSpawnCount = 20;
 }
 
 void ACPGameModeBase::StartPlay()

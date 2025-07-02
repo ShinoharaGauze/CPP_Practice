@@ -95,3 +95,15 @@ bool UCPActionComponent::StopActionByName(AActor* Instigator, FName ActionName)
 
 	return false;
 }
+
+bool UCPActionComponent::HasAction(TSubclassOf<UCPAction> ActionClass) const
+{
+	for (UCPAction* Action : Actions)
+	{
+		if (Action && Action->GetClass() == ActionClass)
+		{
+			return true;
+		}
+	}
+	return false;
+}

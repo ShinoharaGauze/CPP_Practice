@@ -74,9 +74,10 @@ void UCPInteractionComponent::FindBestInteractable()
 		}
 
 		AActor* HitActor = Hit.GetActor();
-		if (HitActor)
+		if (HitActor && HitActor->Implements<UCPGameplayInterface>())
 		{
-			if (HitActor->Implements<UCPGameplayInterface>())
+			APawn* MyPawn = Cast<APawn>(GetOwner());
+			if (MyPawn && ICPGameplayInterface::Execute_CanInteract(HitActor, MyPawn))
 			{
 				FocusedActor = HitActor;
 				break;

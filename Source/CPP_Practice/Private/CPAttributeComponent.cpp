@@ -11,6 +11,8 @@ UCPAttributeComponent::UCPAttributeComponent()
 {
 	HealthMax = 100;
 	Health = HealthMax;
+	RageMax = 100;
+	Rage = 0.0f;
 }
 
 bool UCPAttributeComponent::IsAlive() const
@@ -26,6 +28,16 @@ float UCPAttributeComponent::GetHealth() const
 float UCPAttributeComponent::GetHealthMax() const
 {
 	return HealthMax;
+}
+
+float UCPAttributeComponent::GetRage() const
+{
+	return Rage;
+}
+
+float UCPAttributeComponent::GetRageMax() const
+{
+	return RageMax;
 }
 
 bool UCPAttributeComponent::Kill(AActor* InstigatorActor)
@@ -52,6 +64,25 @@ void UCPAttributeComponent::SetHealthMax(float NewMax, bool bUpdateCurrent)
 	}
 }
 
+void UCPAttributeComponent::SetRageMax(float NewMax, bool bUpdateCurrent)
+{
+	if (NewMax <= 0.f)
+	{
+		return;
+	}
+
+	RageMax = NewMax;
+
+	if (bUpdateCurrent)
+	{
+		Rage = RageMax;
+	}
+	else
+	{
+		Rage = FMath::Clamp(Rage, 0.f, RageMax);
+	}
+}
+
 bool UCPAttributeComponent::ApplyHealthChange(AActor* InstigatorActor, float Delta)
 {
 	if (!GetOwner()->CanBeDamaged() && Delta < 0.0f)
@@ -68,10 +99,18 @@ bool UCPAttributeComponent::ApplyHealthChange(AActor* InstigatorActor, float Del
 	
 	const float OldHealth = Health;
 
+	float RageCoefficient = 0.3f;
+
 	Health = FMath::Clamp(Health + Delta, 0.0f, HealthMax);
 
 	const float ActualDelta = Health - OldHealth;
 	OnHealthChanged.Broadcast(InstigatorActor, this, Health, ActualDelta);
+
+	if (ActualDelta < 0.0f) // 只有受到伤害才加怒气
+	{
+		float DeltaRage = RageCoefficient * FMath::Abs(ActualDelta);
+		ApplyRageChange(DeltaRage);
+	}
 
 	if (ActualDelta < 0.0f && Health == 0.0f)
 	{
@@ -82,6 +121,18 @@ bool UCPAttributeComponent::ApplyHealthChange(AActor* InstigatorActor, float Del
 		}
 	}
 	
+	return ActualDelta != 0.0f;
+}
+
+bool UCPAttributeComponent::ApplyRageChange(float Delta)
+{
+	const float OldRage = Rage;
+
+	Rage = FMath::Clamp(Rage + Delta, 0.0f, RageMax);
+
+	const float ActualDelta = Rage - OldRage;
+	OnRageChanged.Broadcast(this, Rage, ActualDelta);
+
 	return ActualDelta != 0.0f;
 }
 

@@ -34,6 +34,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Action")
 	bool StopActionByName(AActor* Instigator, FName ActionName);
 
+	UFUNCTION(BlueprintCallable, Category = "Action")
+	bool HasAction(TSubclassOf<UCPAction> ActionClass) const;
+
 protected:
 
 	UPROPERTY(EditAnywhere, Category = "Action")

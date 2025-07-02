@@ -35,6 +35,7 @@ void ACPAICharacter::PostInitializeComponents()
 	Super::PostInitializeComponents();
 	
 	AttributeComp->SetHealthMax(10.0f, true); // 设置AI最大血量为80，并重置当前血量
+	AttributeComp->SetRageMax(0.0f, true);
 	AttributeComp->OnHealthChanged.AddDynamic(this, &ACPAICharacter::OnHealthChanged);
 	
 	PawnSensingComp->OnSeePawn.AddDynamic(this, &ACPAICharacter::OnPawnSeen);
@@ -42,10 +43,28 @@ void ACPAICharacter::PostInitializeComponents()
 
 void ACPAICharacter::SetTargetActor(AActor* NewTarget)
 {
+	if (NewTarget == nullptr) return;
+	
 	AAIController* AIC = Cast<AAIController>(GetController());
  	if (AIC)
  	{
- 		AIC->GetBlackboardComponent()->SetValueAsObject("TargetActor", NewTarget);
+ 		UBlackboardComponent* BlackboardComp = AIC->GetBlackboardComponent();
+ 		if (BlackboardComp->GetValueAsObject("TargetActor") == NewTarget)
+ 		{
+ 			return; // 重复目标，跳过
+ 		}
+ 		
+ 		BlackboardComp->SetValueAsObject("TargetActor", NewTarget);
+ 		
+ 		if (ActiveSpottedWidget == nullptr && SpottedWidgetClass)
+ 		{
+ 			ActiveSpottedWidget = CreateWidget<UCPWorldUserWidget>(GetWorld(), SpottedWidgetClass);
+ 			if (ActiveSpottedWidget)
+ 			{
+ 				ActiveSpottedWidget->AttachedActor = this;
+ 				ActiveSpottedWidget->AddToViewport(); 
+ 			}
+ 		}
  	}
 }
 
@@ -53,8 +72,6 @@ void ACPAICharacter::SetTargetActor(AActor* NewTarget)
 void ACPAICharacter::OnPawnSeen(APawn* Pawn)
 {
 	SetTargetActor(Pawn);
-
-	DrawDebugString(GetWorld(), GetActorLocation(), "PLAYER SPOTTED", nullptr, FColor::White, 4.0f, true);
 }
 
 void ACPAICharacter::OnHealthChanged(AActor* InstigatorActor, UCPAttributeComponent* OwningComp, float NewHealth,
