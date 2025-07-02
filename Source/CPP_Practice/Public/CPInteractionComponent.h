@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "CPInteractionComponent.generated.h"
 
+class UCPWorldUserWidget;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CPP_PRACTICE_API UCPInteractionComponent : public UActorComponent
@@ -15,22 +16,35 @@ class CPP_PRACTICE_API UCPInteractionComponent : public UActorComponent
 public:
 
 	void PrimaryInteract();
-	
-	UCPInteractionComponent();
-
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 protected:
+
+	void FindBestInteractable();
+
+	virtual void BeginPlay() override;
 
 	UPROPERTY()
 	AActor* FocusedActor;
 
-	// 蓝图中选择要显示的交互提示 WBP
-	UPROPERTY(EditDefaultsOnly, Category="UI")
-	TSubclassOf<UUserWidget> DefaultInteractionWidgetClass;
+	UPROPERTY(EditDefaultsOnly, Category = "Trace")
+	float TraceDistance;
 
-	// 运行时实例，不要暴露在编辑器中
+	UPROPERTY(EditDefaultsOnly, Category = "Trace")
+	float TraceRadius;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Trace")
+	TEnumAsByte<ECollisionChannel> CollisionChannel;
+
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<UCPWorldUserWidget> DefaultWidgetClass;
+
 	UPROPERTY()
-	UUserWidget* InteractionWidgetInstance;
+	UCPWorldUserWidget* DefaultWidgetInstance;
+
+public:	
+
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	UCPInteractionComponent();
 	
 };

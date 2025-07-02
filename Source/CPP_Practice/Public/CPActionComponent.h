@@ -23,7 +23,10 @@ public:
 	UCPActionComponent();
 
 	UFUNCTION(BlueprintCallable, Category = "Action")
-	void AddAction(TSubclassOf<UCPAction> ActionClass);
+	void AddAction(AActor* Instigator, TSubclassOf<UCPAction> ActionToRemove);
+
+	UFUNCTION(BlueprintCallable, Category = "Action")
+	void RemoveAction(UCPAction* ActionClass);
 
 	UFUNCTION(BlueprintCallable, Category = "Action")
 	bool StartActionByName(AActor* Instigator, FName ActionName);

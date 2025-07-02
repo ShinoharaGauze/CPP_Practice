@@ -7,6 +7,7 @@
 #include "GameplayTagContainer.h"
 #include "CPMagicProjectile.generated.h"
 
+class UCPAction_Effect;
 /**
  * 
  */
@@ -25,6 +26,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	FGameplayTag ParryTag;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	TSubclassOf<UCPAction_Effect> BurningActionClass;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	float DamageAmount;

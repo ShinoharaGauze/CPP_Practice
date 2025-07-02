@@ -4,6 +4,7 @@
 #include "CPMagicProjectile.h"
 
 #include "CPActionComponent.h"
+#include "CPAction_Effect.h"
 #include "CPGameplayFunctionLibrary.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
@@ -31,6 +32,11 @@ void ACPMagicProjectile::OnActorOverlap(::UPrimitiveComponent* OverlappedCompone
 		if (UCPGameplayFunctionLibrary::ApplyDirectionalDamage(GetInstigator(), OtherActor, DamageAmount, SweepResult))
 		{
 			Explode();
+
+			if (ActionComp)
+			{
+				ActionComp->AddAction(GetInstigator(), BurningActionClass);
+			}
 		}
 	}
 }

@@ -6,7 +6,7 @@
 #include "GameFramework/PlayerState.h"
 #include "CPPlayerState.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCreditsChanged, float, NewCredits, float, Delta);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnCreditsChanged, ACPPlayerState*, PlayerState, float, NewCredits, float, Delta);
 
 /**
  * 

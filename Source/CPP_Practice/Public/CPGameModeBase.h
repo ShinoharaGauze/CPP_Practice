@@ -39,7 +39,7 @@ protected:
 	TArray<TSubclassOf<AActor>> PickupClasses;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Pickups")
-	int32 MaxPickupSpawnCount = 20;
+	int32 MaxPickupSpawnCount;
 		
 	FTimerHandle TimerHandle_SpawnBots;
 

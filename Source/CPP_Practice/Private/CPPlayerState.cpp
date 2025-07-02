@@ -10,7 +10,12 @@ ACPPlayerState::ACPPlayerState()
 
 void ACPPlayerState::AddCredits(float Delta)
 {
+	if (!ensure(Delta != 0.0f))
+	{
+		return;
+	}
+	
 	Credits += Delta;
 
-	OnCreditsChanged.Broadcast(Credits, Delta);
+	OnCreditsChanged.Broadcast(this, Credits, Delta);
 }
