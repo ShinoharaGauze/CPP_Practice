@@ -9,6 +9,7 @@ UCPActionComponent::UCPActionComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 
+	SetIsReplicatedByDefault(true);
 }
 
 void UCPActionComponent::BeginPlay()
@@ -70,6 +71,11 @@ bool UCPActionComponent::StartActionByName(AActor* Instigator, FName ActionName)
 				GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, FailedMsg);
 				continue;
 			}
+
+			if (!GetOwner()->HasAuthority())
+			{
+				ServerStartAction(Instigator, ActionName);
+			}
 			
 			Action->StartAction(Instigator);
 			return true;
@@ -106,4 +112,9 @@ bool UCPActionComponent::HasAction(TSubclassOf<UCPAction> ActionClass) const
 		}
 	}
 	return false;
+}
+
+void UCPActionComponent::ServerStartAction_Implementation(AActor* Instigator, FName ActionName)
+{
+	StartActionByName(Instigator, ActionName); 
 }

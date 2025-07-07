@@ -4,6 +4,7 @@
 #include "CPAttributeComponent.h"
 
 #include "CPGameModeBase.h"
+#include "Net/UnrealNetwork.h"
 
 static TAutoConsoleVariable CVarDamageMultiplier(TEXT("cp.DamageMultiplier"), 1.0f, TEXT("Global Damage Modifier for Attribute Component."), ECVF_Cheat);
 
@@ -13,6 +14,8 @@ UCPAttributeComponent::UCPAttributeComponent()
 	Health = HealthMax;
 	RageMax = 100;
 	Rage = 0.0f;
+
+	SetIsReplicatedByDefault(true);
 }
 
 bool UCPAttributeComponent::IsAlive() const
@@ -104,7 +107,12 @@ bool UCPAttributeComponent::ApplyHealthChange(AActor* InstigatorActor, float Del
 	Health = FMath::Clamp(Health + Delta, 0.0f, HealthMax);
 
 	const float ActualDelta = Health - OldHealth;
-	OnHealthChanged.Broadcast(InstigatorActor, this, Health, ActualDelta);
+	//OnHealthChanged.Broadcast(InstigatorActor, this, Health, ActualDelta);
+
+	if (ActualDelta != 0.0f)
+	{
+		MulticastHealthChanged(InstigatorActor, Health, ActualDelta);
+	}
 
 	if (ActualDelta < 0.0f) // 只有受到伤害才加怒气
 	{
@@ -155,4 +163,19 @@ bool UCPAttributeComponent::IsActorAlive(AActor* Actor)
 	}
 
 	return false;
+}
+
+void UCPAttributeComponent::MulticastHealthChanged_Implementation(AActor* InstigatorActor, float NewHealth, float Delta)
+{
+	OnHealthChanged.Broadcast(InstigatorActor, this, NewHealth, Delta);
+}
+
+void UCPAttributeComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(UCPAttributeComponent, Health);
+	DOREPLIFETIME(UCPAttributeComponent, HealthMax);
+
+	//DOREPLIFETIME_CONDITION(UCPAttributeComponent, HealthMax, COND_OwnerOnly);
 }

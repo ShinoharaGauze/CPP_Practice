@@ -30,6 +30,7 @@ ACPBaseProjectile::ACPBaseProjectile()
 	ProjectileSoundComp->SetupAttachment(RootComponent);
 	ProjectileSoundComp->bAutoActivate = false;
 	
+	SetReplicates(true);
 }
 
 void ACPBaseProjectile::BeginPlay()

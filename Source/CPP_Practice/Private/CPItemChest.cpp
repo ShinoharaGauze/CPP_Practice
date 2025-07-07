@@ -3,6 +3,8 @@
 
 #include "CPItemChest.h"
 
+#include "Net/UnrealNetwork.h"
+
 // Sets default values
 ACPItemChest::ACPItemChest()
 {
@@ -10,13 +12,27 @@ ACPItemChest::ACPItemChest()
 	LidMesh->SetupAttachment(BaseMesh);
 
 	TargetPitch = 110.0f;
+
+	SetReplicates(true);
 }
 
 void ACPItemChest::Interact_Implementation(APawn* InstigatorPawn)
 {
-	LidMesh->SetRelativeRotation(FRotator(TargetPitch, 0, 0));
+	bLidOpened = !bLidOpened;
+	OnRep_LidOpened();
+}
 
-	SetActiveState(false);
+void ACPItemChest::OnRep_LidOpened()
+{
+	float CurrPitch = bLidOpened ? TargetPitch : 0.0f;
+	LidMesh->SetRelativeRotation(FRotator(CurrPitch, 0, 0));
+}
+
+void ACPItemChest::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ACPItemChest, bLidOpened);
 }
 
 

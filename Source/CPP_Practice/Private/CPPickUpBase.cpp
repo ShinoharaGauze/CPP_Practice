@@ -8,6 +8,8 @@ ACPPickUpBase::ACPPickUpBase()
 {
 	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>("BaseMesh");
 	RootComponent = BaseMesh;
+
+	SetReplicates(true);
 }
 
 float ACPPickUpBase::GetBottomOffset() const

@@ -30,7 +30,6 @@ void UCPInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-
 	APawn* MyPawn = Cast<APawn>(GetOwner());
 	if (MyPawn->IsLocallyControlled())
 	{
@@ -119,13 +118,17 @@ void UCPInteractionComponent::FindBestInteractable()
 
 void UCPInteractionComponent::PrimaryInteract()
 {
-	if (!FocusedActor) return;
+	ServerInteract(FocusedActor);
+}
+
+void UCPInteractionComponent::ServerInteract_Implementation(AActor* InFocus)
+{
+	if (InFocus == nullptr)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "No Focus Actor to interact.");
+		return;
+	}
 
 	APawn* MyPawn = Cast<APawn>(GetOwner());
-	if (!MyPawn) return;
-
-	if (FocusedActor->Implements<UCPGameplayInterface>())
-	{
-		ICPGameplayInterface::Execute_Interact(FocusedActor, MyPawn);
-	}
+	ICPGameplayInterface::Execute_Interact(InFocus, MyPawn);
 }
