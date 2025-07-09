@@ -139,7 +139,12 @@ bool UCPAttributeComponent::ApplyRageChange(float Delta)
 	Rage = FMath::Clamp(Rage + Delta, 0.0f, RageMax);
 
 	const float ActualDelta = Rage - OldRage;
-	OnRageChanged.Broadcast(this, Rage, ActualDelta);
+	//OnRageChanged.Broadcast(this, Rage, ActualDelta);
+
+	if (ActualDelta != 0.0f)
+	{
+		MulticastRageChanged(Rage, ActualDelta);
+	}
 
 	return ActualDelta != 0.0f;
 }
@@ -170,12 +175,18 @@ void UCPAttributeComponent::MulticastHealthChanged_Implementation(AActor* Instig
 	OnHealthChanged.Broadcast(InstigatorActor, this, NewHealth, Delta);
 }
 
+void UCPAttributeComponent::MulticastRageChanged_Implementation(float NewRage, float Delta)
+{
+	OnRageChanged.Broadcast(this, NewRage, Delta);
+}
+
 void UCPAttributeComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(UCPAttributeComponent, Health);
 	DOREPLIFETIME(UCPAttributeComponent, HealthMax);
-
+	DOREPLIFETIME(UCPAttributeComponent, Rage);
+	DOREPLIFETIME(UCPAttributeComponent, RageMax);
 	//DOREPLIFETIME_CONDITION(UCPAttributeComponent, HealthMax, COND_OwnerOnly);
 }

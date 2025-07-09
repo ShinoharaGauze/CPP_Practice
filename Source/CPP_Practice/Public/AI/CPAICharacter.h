@@ -61,6 +61,9 @@ protected:
 	UFUNCTION()
 	void OnHealthChanged(AActor* InstigatorActor, UCPAttributeComponent* OwningComp, float NewHealth, float Delta);
 
+	UFUNCTION(NetMulticast, Unreliable)
+	void MulticastShowSpottedWidget();
+
 public:
 	UFUNCTION(BlueprintCallable, Category = "Credits")
 	float GetCredit() const { return Credit; }

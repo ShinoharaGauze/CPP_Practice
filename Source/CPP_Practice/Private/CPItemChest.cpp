@@ -13,19 +13,30 @@ ACPItemChest::ACPItemChest()
 
 	TargetPitch = 110.0f;
 
-	SetReplicates(true);
+    bLidOpened = false;
 }
 
 void ACPItemChest::Interact_Implementation(APawn* InstigatorPawn)
 {
+	if (!HasAuthority())
+	{
+		return;
+	}
+
 	bLidOpened = !bLidOpened;
-	OnRep_LidOpened();
+
+	UpdateVisualState();
+}
+
+void ACPItemChest::UpdateVisualState()
+{
+	float CurrPitch = bLidOpened ? TargetPitch : 0.0f;
+	LidMesh->SetRelativeRotation(FRotator(CurrPitch, 0, 0));
 }
 
 void ACPItemChest::OnRep_LidOpened()
 {
-	float CurrPitch = bLidOpened ? TargetPitch : 0.0f;
-	LidMesh->SetRelativeRotation(FRotator(CurrPitch, 0, 0));
+	UpdateVisualState();
 }
 
 void ACPItemChest::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

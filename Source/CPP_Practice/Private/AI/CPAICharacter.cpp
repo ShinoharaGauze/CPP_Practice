@@ -56,15 +56,7 @@ void ACPAICharacter::SetTargetActor(AActor* NewTarget)
  		
  		BlackboardComp->SetValueAsObject("TargetActor", NewTarget);
  		
- 		if (ActiveSpottedWidget == nullptr && SpottedWidgetClass)
- 		{
- 			ActiveSpottedWidget = CreateWidget<UCPWorldUserWidget>(GetWorld(), SpottedWidgetClass);
- 			if (ActiveSpottedWidget)
- 			{
- 				ActiveSpottedWidget->AttachedActor = this;
- 				ActiveSpottedWidget->AddToViewport(); 
- 			}
- 		}
+ 		MulticastShowSpottedWidget();
  	}
 }
 
@@ -111,6 +103,19 @@ void ACPAICharacter::OnHealthChanged(AActor* InstigatorActor, UCPAttributeCompon
 			GetCharacterMovement()->DisableMovement();
 			
 			SetLifeSpan(10.0f);
+		}
+	}
+}
+
+void ACPAICharacter::MulticastShowSpottedWidget_Implementation()
+{
+	if (ActiveSpottedWidget == nullptr && SpottedWidgetClass)
+	{
+		ActiveSpottedWidget = CreateWidget<UCPWorldUserWidget>(GetWorld(), SpottedWidgetClass);
+		if (ActiveSpottedWidget)
+		{
+			ActiveSpottedWidget->AttachedActor = this;
+			ActiveSpottedWidget->AddToViewport(); 
 		}
 	}
 }

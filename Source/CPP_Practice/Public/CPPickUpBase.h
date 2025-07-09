@@ -34,8 +34,11 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* BaseMesh;
 	
-	UPROPERTY()
-	bool bIsActive = true;
+	UPROPERTY(ReplicatedUsing="OnRep_IsActive")
+	bool bIsActive;
 
+	UFUNCTION()
+	void OnRep_IsActive();
 
+	virtual void UpdateVisualState();
 };

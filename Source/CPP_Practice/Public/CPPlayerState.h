@@ -20,8 +20,13 @@ public:
 	ACPPlayerState();
 
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Credits")
+	UPROPERTY(ReplicatedUsing = OnRep_Credits, EditDefaultsOnly, BlueprintReadOnly, Category = "Credits")
 	float Credits;
+
+	UPROPERTY()
+	float OldCredits;
+
+	virtual void BeginPlay() override;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Credits")
@@ -34,4 +39,7 @@ public:
 	/** 增加积分 */
 	UFUNCTION(BlueprintCallable, Category = "Credits")
 	void AddCredits(float Delta);
+
+	UFUNCTION()
+	void OnRep_Credits();
 };

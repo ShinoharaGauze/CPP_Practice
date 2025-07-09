@@ -38,7 +38,7 @@ bool ACPHealthPotion::CanInteract_Implementation(APawn* InstigatorPawn) const
 
 void ACPHealthPotion::Interact_Implementation(APawn* InstigatorPawn)
 {
-	if (!CanInteract_Implementation(InstigatorPawn))
+	if (!HasAuthority() || !CanInteract_Implementation(InstigatorPawn))
 	{
 		return;
 	}

@@ -20,6 +20,7 @@ public:
 	virtual void Interact_Implementation(APawn* InstigatorPawn) override;
 
 protected:
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Credits")
 	float CreditAmount = 25.0f;
 

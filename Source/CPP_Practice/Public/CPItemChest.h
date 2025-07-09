@@ -19,6 +19,8 @@ public:
 	// 这里覆盖基类的实现
 	virtual void Interact_Implementation(APawn* InstigatorPawn) override;
 
+	virtual void UpdateVisualState() override;
+
 	// 构造和生命周期函数
 	ACPItemChest();
 

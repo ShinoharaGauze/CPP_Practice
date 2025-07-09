@@ -4,6 +4,7 @@
 #include "CPActionComponent.h"
 
 #include "CPAction.h"
+#include "CPP_Practice/CPP_Practice.h"
 
 UCPActionComponent::UCPActionComponent()
 {
@@ -26,8 +27,21 @@ void UCPActionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	FString DebugMsg = GetNameSafe(GetOwner()) + ": " + ActiveGameplayTags.ToStringSimple();
-	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::White, DebugMsg);
+	//FString DebugMsg = GetNameSafe(GetOwner()) + ": " + ActiveGameplayTags.ToStringSimple();
+	//GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::White, DebugMsg);
+
+	for (UCPAction* Action : Actions)
+	{
+		FColor TextColor = Action->IsRunning() ? FColor::Blue : FColor::White;
+		
+		FString ActionMsg = FString::Printf(TEXT("[%s] Action: %s : IsRunning: %s : Outer: %s"),
+			*GetNameSafe(GetOwner()),
+			*Action->ActionName.ToString(),
+			Action->IsRunning() ? TEXT("true") : TEXT("false"),
+			*GetNameSafe(GetOuter()));
+		
+		LogOnScreen(this, ActionMsg, TextColor, 0.0f);
+	}
 }
 
 void UCPActionComponent::AddAction(AActor* Instigator, TSubclassOf<UCPAction> ActionClass)

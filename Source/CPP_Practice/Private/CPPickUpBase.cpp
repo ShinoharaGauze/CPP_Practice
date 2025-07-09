@@ -3,13 +3,17 @@
 
 #include "CPPickUpBase.h"
 
+#include "Net/UnrealNetwork.h"
+
 // Sets default values
 ACPPickUpBase::ACPPickUpBase()
 {
 	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>("BaseMesh");
 	RootComponent = BaseMesh;
 
-	SetReplicates(true);
+	bIsActive = true;
+
+	bReplicates = true;
 }
 
 float ACPPickUpBase::GetBottomOffset() const
@@ -35,17 +39,37 @@ bool ACPPickUpBase::CanInteract_Implementation(APawn* InstigatorPawn) const
 
 void ACPPickUpBase::SetActiveState(bool bNewActive)
 {
-	bIsActive = bNewActive;
-
-	if (BaseMesh)
+	if (HasAuthority()) // 仅服务端可以设置
 	{
-		BaseMesh->SetVisibility(bNewActive, true);
-		BaseMesh->SetCollisionEnabled(bNewActive ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
+		bIsActive = bNewActive;
+		// 客户端的视觉由 OnRep 来处理
+		UpdateVisualState(); // 手动调用以同步视觉给本地客户端（监听服务器）
 	}
 }
 
 void ACPPickUpBase::Respawn()
 {
 	SetActiveState(true);
+}
+
+void ACPPickUpBase::OnRep_IsActive()
+{
+	// 所有客户端都在这里更新表现
+	UpdateVisualState();
+}
+
+void ACPPickUpBase::UpdateVisualState()
+{
+	if (BaseMesh)
+	{
+		BaseMesh->SetVisibility(bIsActive, true);
+		BaseMesh->SetCollisionEnabled(bIsActive ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
+	}
+}
+
+void ACPPickUpBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(ACPPickUpBase, bIsActive);
 }
 

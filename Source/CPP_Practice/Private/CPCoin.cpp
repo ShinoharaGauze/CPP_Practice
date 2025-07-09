@@ -12,7 +12,7 @@ ACPCoin::ACPCoin()
 
 void ACPCoin::Interact_Implementation(APawn* InstigatorPawn)
 {
-	if (!bIsActive)
+	if (!HasAuthority() || !bIsActive)
 	{
 		return;
 	}
