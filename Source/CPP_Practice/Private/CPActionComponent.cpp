@@ -5,6 +5,8 @@
 
 #include "CPAction.h"
 #include "CPP_Practice/CPP_Practice.h"
+#include "Engine/ActorChannel.h"
+#include "Net/UnrealNetwork.h"
 
 UCPActionComponent::UCPActionComponent()
 {
@@ -17,11 +19,17 @@ void UCPActionComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	for (TSubclassOf<UCPAction> ActionClass : DefaultActions)
+	// Server Only
+	if (GetOwner()->HasAuthority())
 	{
-		AddAction(GetOwner(), ActionClass);
+		for (TSubclassOf<UCPAction> ActionClass : DefaultActions)
+		{
+			AddAction(GetOwner(), ActionClass);
+		}
 	}
 }
+
+
 
 void UCPActionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -34,11 +42,7 @@ void UCPActionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	{
 		FColor TextColor = Action->IsRunning() ? FColor::Blue : FColor::White;
 		
-		FString ActionMsg = FString::Printf(TEXT("[%s] Action: %s : IsRunning: %s : Outer: %s"),
-			*GetNameSafe(GetOwner()),
-			*Action->ActionName.ToString(),
-			Action->IsRunning() ? TEXT("true") : TEXT("false"),
-			*GetNameSafe(GetOuter()));
+		FString ActionMsg = FString::Printf(TEXT("[%s] Action: %s"), *GetNameSafe(GetOwner()), *GetNameSafe(Action));
 		
 		LogOnScreen(this, ActionMsg, TextColor, 0.0f);
 	}
@@ -51,9 +55,17 @@ void UCPActionComponent::AddAction(AActor* Instigator, TSubclassOf<UCPAction> Ac
 		return;
 	}
 
-	UCPAction* NewAction = NewObject<UCPAction>(this, ActionClass);
+	if (!GetOwner()->HasAuthority())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Client attempt to AddAction. [Class: %s]"), *GetNameSafe(ActionClass));
+		return;
+	}
+
+	UCPAction* NewAction = NewObject<UCPAction>(GetOwner(), ActionClass);
 	if (ensure(NewAction))
 	{
+		NewAction->Initialize(this);
+		
 		Actions.Add(NewAction);
 
 		if (NewAction->bAutoStart && ensure(NewAction->CanStart(Instigator)))
@@ -107,6 +119,11 @@ bool UCPActionComponent::StopActionByName(AActor* Instigator, FName ActionName)
 		{
 			if (Action->IsRunning())
 			{
+				if (!GetOwner()->HasAuthority())
+				{
+					ServerStopAction(Instigator, ActionName);
+				}
+				
 				Action->StopAction(Instigator);
 				return true;
 			}
@@ -131,4 +148,31 @@ bool UCPActionComponent::HasAction(TSubclassOf<UCPAction> ActionClass) const
 void UCPActionComponent::ServerStartAction_Implementation(AActor* Instigator, FName ActionName)
 {
 	StartActionByName(Instigator, ActionName); 
+}
+
+void UCPActionComponent::ServerStopAction_Implementation(AActor* Instigator, FName ActionName)
+{
+	StopActionByName(Instigator, ActionName);
+}
+
+bool UCPActionComponent::ReplicateSubobjects(class UActorChannel* Channel, class FOutBunch* Bunch,
+	FReplicationFlags* RepFlags)
+{
+	bool WroteSomething = Super::ReplicateSubobjects(Channel, Bunch, RepFlags);
+	for (UCPAction* Action : Actions)
+	{
+		if (Action)
+		{
+			WroteSomething |= Channel->ReplicateSubobject(Action, *Bunch, *RepFlags);
+		}
+	}
+
+	return WroteSomething;
+}
+
+void UCPActionComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(UCPActionComponent, Actions);
 }

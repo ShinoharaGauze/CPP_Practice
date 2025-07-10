@@ -9,24 +9,20 @@
   <component name="ChangeListManager">
     <list default="true" id="65846d85-43f7-4c88-a000-293a598dde5c" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CPP_Practice.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CPP_Practice.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/Actions/BP_Action_MultiplayerTest.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/Actions/BP_Action_MultiplayerTest.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/BP_GameMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/BP_GameMode.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/BP_PlayerCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/BP_PlayerCharacter.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/BP_PlayerController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/BP_PlayerController.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_Credits.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_Credits.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/CPP_Practice.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/CPP_Practice.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/AI/CPAICharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/AI/CPAICharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/Maps/TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/Maps/TestLevel.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_PlayerHealth.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_PlayerHealth.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPAction.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPAction.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPActionComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPActionComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPAction_ProjectileAttack.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPAction_ProjectileAttack.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPAttributeComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPAttributeComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPCoin.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPCoin.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPHealthPotion.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPHealthPotion.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPItemChest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPItemChest.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPPickUpBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPPickUpBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPPlayerState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPPlayerState.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/AI/CPAICharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/AI/CPAICharacter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPAttributeComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPAttributeComponent.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPCoin.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPCoin.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPItemChest.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPItemChest.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPPickUpBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPPickUpBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPPlayerState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPPlayerState.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPMagicProjectile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPMagicProjectile.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPAction.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPAction.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPActionComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPActionComponent.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +53,7 @@
     <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Plugins/VirtualProduction/Takes/Source/TakeRecorder/Private/Widgets/TakeRecorderWidgetConstants.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Editor/SequencerCore/Private/TimeToPixel.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Runtime/Core/Public/Virtualization/VirtualizationSystem.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Runtime/Engine/Classes/Components/ActorComponent.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Runtime/Engine/Classes/Components/PrimitiveComponent.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Runtime/Engine/Classes/GameFramework/Character.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../UnrealEngine/UE_5.6/Engine/Source/Runtime/Engine/Classes/GameFramework/LightWeightInstanceStaticMeshManager.h" root0="FORCE_HIGHLIGHTING" />
@@ -81,6 +78,8 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Notification.DisplayName-DoNotAsk-Plugin Error&quot;: &quot;插件加载失败&quot;,
+    &quot;Notification.DoNotAsk-Plugin Error&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;Uproject.CPP_Practice.executor&quot;: &quot;Run&quot;,
@@ -192,7 +191,8 @@
       <workItem from="1751593767557" duration="12642000" />
       <workItem from="1751852186687" duration="11945000" />
       <workItem from="1751938302124" duration="12282000" />
-      <workItem from="1752024750664" duration="9527000" />
+      <workItem from="1752024750664" duration="23907000" />
+      <workItem from="1752111295635" duration="10416000" />
     </task>
     <servers />
   </component>

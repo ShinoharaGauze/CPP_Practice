@@ -92,7 +92,7 @@ bool UCPAttributeComponent::ApplyHealthChange(AActor* InstigatorActor, float Del
 	{
 		return false;
 	}
-
+	
 	if (Delta < 0.0f)
 	{
 		float DamageMultiplier = CVarDamageMultiplier.GetValueOnGameThread();
@@ -101,32 +101,33 @@ bool UCPAttributeComponent::ApplyHealthChange(AActor* InstigatorActor, float Del
 	}
 	
 	const float OldHealth = Health;
-
-	float RageCoefficient = 0.3f;
-
-	Health = FMath::Clamp(Health + Delta, 0.0f, HealthMax);
-
-	const float ActualDelta = Health - OldHealth;
-	//OnHealthChanged.Broadcast(InstigatorActor, this, Health, ActualDelta);
-
-	if (ActualDelta != 0.0f)
+	float NewHealth = FMath::Clamp(Health + Delta, 0.0f, HealthMax);
+	const float ActualDelta = NewHealth - OldHealth;
+	
+	if (GetOwner()->HasAuthority())
 	{
-		MulticastHealthChanged(InstigatorActor, Health, ActualDelta);
+		Health = NewHealth;
+		
+		if (ActualDelta != 0.0f)
+		{
+			MulticastHealthChanged(InstigatorActor, Health, ActualDelta);
+		}
+
+		if (ActualDelta < 0.0f && Health == 0.0f)
+		{
+			ACPGameModeBase* GM = GetWorld()->GetAuthGameMode<ACPGameModeBase>();
+			if (GM)
+			{
+				GM->OnActorKilled(GetOwner(), InstigatorActor);
+			}
+		}
 	}
 
 	if (ActualDelta < 0.0f) // 只有受到伤害才加怒气
 	{
+		float RageCoefficient = 0.6f;
 		float DeltaRage = RageCoefficient * FMath::Abs(ActualDelta);
 		ApplyRageChange(DeltaRage);
-	}
-
-	if (ActualDelta < 0.0f && Health == 0.0f)
-	{
-		ACPGameModeBase* GM = GetWorld()->GetAuthGameMode<ACPGameModeBase>();
-		if (GM)
-		{
-			GM->OnActorKilled(GetOwner(), InstigatorActor);
-		}
 	}
 	
 	return ActualDelta != 0.0f;
