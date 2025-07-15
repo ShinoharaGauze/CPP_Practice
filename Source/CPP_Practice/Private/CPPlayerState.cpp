@@ -3,6 +3,7 @@
 
 #include "CPPlayerState.h"
 
+#include "CPSaveGame.h"
 #include "Net/UnrealNetwork.h"
 
 ACPPlayerState::ACPPlayerState()
@@ -13,8 +14,6 @@ ACPPlayerState::ACPPlayerState()
 void ACPPlayerState::BeginPlay()
 {
 	Super::BeginPlay();
-
-	OldCredits = Credits;
 }
 
 void ACPPlayerState::AddCredits(float Delta)
@@ -28,16 +27,28 @@ void ACPPlayerState::AddCredits(float Delta)
 	
 	Credits += Delta;
 	
-	OnRep_Credits();
+	OnRep_Credits(Credits);
 }
 
-void ACPPlayerState::OnRep_Credits()
+void ACPPlayerState::SavePlayerState_Implementation(UCPSaveGame* SaveObject)
 {
-	float Delta = Credits - OldCredits;
+	if (SaveObject)
+	{
+		SaveObject->Credits = Credits;
+	}
+}
 
-	OnCreditsChanged.Broadcast(this, Credits, Delta);
+void ACPPlayerState::LoadPlayerState_Implementation(UCPSaveGame* SaveObject)
+{
+	if (SaveObject)
+	{
+		AddCredits(SaveObject->Credits);
+	}
+}
 
-	OldCredits = Credits;
+void ACPPlayerState::OnRep_Credits(const float OldCredits)
+{
+	OnCreditsChanged.Broadcast(this, Credits, Credits - OldCredits);
 }
 
 void ACPPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

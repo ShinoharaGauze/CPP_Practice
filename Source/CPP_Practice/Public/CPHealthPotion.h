@@ -18,7 +18,7 @@ public:
 	ACPHealthPotion();
 
 	virtual void Interact_Implementation(APawn* InstigatorPawn) override;
-	virtual bool CanInteract_Implementation(APawn* InstigatorPawn) const override;
+	FText GetInteractText_Implementation(APawn* InstigatorPawn) override;
 
 protected:
 	// 冷却时间（秒）

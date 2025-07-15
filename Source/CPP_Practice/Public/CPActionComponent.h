@@ -9,6 +9,8 @@
 
 class UCPAction;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnActionStateChanged, UCPActionComponent*, OwningComp, UCPAction*, Action);
+
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class CPP_PRACTICE_API UCPActionComponent : public UActorComponent
 {
@@ -44,6 +46,12 @@ public:
 
 	// Tick
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	
+	UPROPERTY(BlueprintAssignable)
+	FOnActionStateChanged OnActionStarted;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnActionStateChanged OnActionStopped;
 
 protected:
 
@@ -63,6 +71,6 @@ protected:
 	TArray<TSubclassOf<UCPAction>> DefaultActions;
 
 	// 当前运行中的 Action 实例（由服务器同步）
-	UPROPERTY(Replicated)
+	UPROPERTY(BlueprintReadOnly, Replicated)
 	TArray<UCPAction*> Actions;
 };

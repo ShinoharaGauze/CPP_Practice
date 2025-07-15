@@ -6,7 +6,9 @@
 #include "GameFramework/PlayerState.h"
 #include "CPPlayerState.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnCreditsChanged, ACPPlayerState*, PlayerState, float, NewCredits, float, Delta);
+class UCPSaveGame;
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnCreditsChanged, ACPPlayerState*, PlayerState, float, NewCredits,
+                                               float, Delta);
 
 /**
  * 
@@ -23,9 +25,6 @@ protected:
 	UPROPERTY(ReplicatedUsing = OnRep_Credits, EditDefaultsOnly, BlueprintReadOnly, Category = "Credits")
 	float Credits;
 
-	UPROPERTY()
-	float OldCredits;
-
 	virtual void BeginPlay() override;
 
 public:
@@ -40,6 +39,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Credits")
 	void AddCredits(float Delta);
 
+	UFUNCTION(BlueprintNativeEvent)
+	void SavePlayerState(UCPSaveGame* SaveObject);
+
+	UFUNCTION(BlueprintNativeEvent)
+	void LoadPlayerState(UCPSaveGame* SaveObject);
+
 	UFUNCTION()
-	void OnRep_Credits();
+	void OnRep_Credits(float OldCredits);
 };

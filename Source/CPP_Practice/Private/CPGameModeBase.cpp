@@ -7,10 +7,14 @@
 #include "CPCharacter.h"
 #include "CPPickUpBase.h"
 #include "CPPlayerState.h"
+#include "CPSaveGame.h"
 #include "EngineUtils.h"
 #include "AI/CPAICharacter.h"
 #include "EnvironmentQuery/EnvQueryManager.h"
 #include "Algo/RandomShuffle.h"
+#include "GameFramework/GameStateBase.h"
+#include "Kismet/GameplayStatics.h"
+#include "Serialization/ObjectAndNameAsStringProxyArchive.h"
 
 static TAutoConsoleVariable CVarSpawnBots(TEXT("cp.SpawnBots"), true, TEXT("Enable spawning of bots via timer."), ECVF_Cheat);
 
@@ -18,6 +22,15 @@ ACPGameModeBase::ACPGameModeBase()
 {
 	SpawnTimerInterval = 2.0f;
 	MaxPickupSpawnCount = 20;
+
+	SlotName = "SaveGame01";
+}
+
+void ACPGameModeBase::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
+{
+	Super::InitGame(MapName, Options, ErrorMessage);
+
+	LoadSaveGame();
 }
 
 void ACPGameModeBase::StartPlay()
@@ -42,6 +55,17 @@ void ACPGameModeBase::StartPlay()
 	}
 }
 
+void ACPGameModeBase::HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer)
+{
+	ACPPlayerState* PlayerState = NewPlayer->GetPlayerState<ACPPlayerState>();
+	if (PlayerState)
+	{
+		PlayerState->LoadPlayerState(CurrentSaveGame);
+	}
+
+	Super::HandleStartingNewPlayer_Implementation(NewPlayer);
+}
+
 void ACPGameModeBase::KillAll()
 {
 	for (TActorIterator<ACPAICharacter> It(GetWorld()); It; ++It)
@@ -55,6 +79,7 @@ void ACPGameModeBase::KillAll()
 		}
 	}
 }
+
 
 void ACPGameModeBase::SpawnBotTimerElapsed()
 {
@@ -232,3 +257,93 @@ void ACPGameModeBase::OnActorKilled(AActor* VictimActor, AActor* Killer)
 	UE_LOG(LogTemp, Log, TEXT("OnActorKilled: Victim: %s, Killer: %s"), *GetNameSafe(VictimActor), *GetNameSafe(Killer));
 }
 
+void ACPGameModeBase::WriteSaveGame()
+{
+	for (int32 i = 0; i < GameState->PlayerArray.Num(); i++)
+	{
+		ACPPlayerState* PlayerState = Cast<ACPPlayerState>(GameState->PlayerArray[i]);
+		if (PlayerState)
+		{
+			PlayerState->SavePlayerState(CurrentSaveGame);
+			break;
+		}
+	}
+
+	CurrentSaveGame->SavedActors.Empty(); 
+	
+	for (FActorIterator It(GetWorld()); It; ++It)
+	{
+		AActor* Actor = *It;
+		if (!Actor->Implements<UCPGameplayInterface>())
+		{
+			continue;
+		}
+
+		FActorSaveData ActorData;
+		ActorData.ActorName = Actor->GetName();
+		ActorData.Transform = Actor->GetActorTransform();
+
+		FMemoryWriter MemWriter(ActorData.ByteData);
+		
+		FObjectAndNameAsStringProxyArchive Ar(MemWriter, true);
+		
+		// Find only variables with UPROPERTY(SaveGame)
+		Ar.ArIsSaveGame = true;
+		
+		// Converts Actor's SaveGame UPROPERTIES into binary array
+		Actor->Serialize(Ar); 
+		
+		CurrentSaveGame->SavedActors.Add(ActorData);
+	}
+	
+	UGameplayStatics::SaveGameToSlot(CurrentSaveGame, SlotName, 0);
+}
+
+void ACPGameModeBase::LoadSaveGame()
+{
+	if (UGameplayStatics::DoesSaveGameExist(SlotName, 0))
+	{
+		CurrentSaveGame = Cast<UCPSaveGame>(UGameplayStatics::LoadGameFromSlot(SlotName, 0));
+		if (CurrentSaveGame == nullptr)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Failed to load SaveGame Data."));
+			return;
+		}
+
+		UE_LOG(LogTemp, Log, TEXT("Loaded SaveGame Data."));
+
+		for (FActorIterator It(GetWorld()); It; ++It)
+		{
+			AActor* Actor = *It;
+			if (!Actor->Implements<UCPGameplayInterface>())
+			{
+				continue;
+			}
+
+			for (FActorSaveData ActorData : CurrentSaveGame->SavedActors)
+			{
+				if (ActorData.ActorName == Actor->GetName())
+				{
+					Actor->SetActorTransform(ActorData.Transform);
+
+					FMemoryReader MemReader(ActorData.ByteData);
+		
+					FObjectAndNameAsStringProxyArchive Ar(MemReader, true);
+					Ar.ArIsSaveGame = true;
+					
+					Actor->Serialize(Ar);
+
+					ICPGameplayInterface::Execute_OnActorLoaded(Actor);
+					
+					break;
+				}
+			}
+		}
+	}
+	else
+	{
+		CurrentSaveGame = Cast<UCPSaveGame>(UGameplayStatics::CreateSaveGameObject(UCPSaveGame::StaticClass()));
+
+		UE_LOG(LogTemp, Log, TEXT("Created New SaveGame Data."));
+	}
+}

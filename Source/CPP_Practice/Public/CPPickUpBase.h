@@ -29,6 +29,8 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Pickup")
 	void Interact(APawn* InstigatorPawn);
 
+	FText GetInteractText_Implementation(APawn* InstigatorPawn);
+
 protected:
 	
 	UPROPERTY(VisibleAnywhere)

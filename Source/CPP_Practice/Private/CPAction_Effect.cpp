@@ -4,8 +4,20 @@
 #include "CPAction_Effect.h"
 
 #include "CPActionComponent.h"
+#include "GameFramework/GameStateBase.h"
 
 
+float UCPAction_Effect::GetTimeRemaining() const
+{
+	AGameStateBase* GameState = GetWorld()->GetGameState<AGameStateBase>();
+	if (GameState)
+	{
+		float EndTime = TimeStarted + Duration;
+		return EndTime - GameState->GetServerWorldTimeSeconds();
+	}
+
+	return Duration;
+}
 
 UCPAction_Effect::UCPAction_Effect()
 {

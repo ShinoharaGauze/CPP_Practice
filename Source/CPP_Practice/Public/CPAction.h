@@ -75,6 +75,9 @@ protected:
 
 	// ======== Protected Properties ========
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
+	UTexture2D* Icon;
+	
 	/** 动作所依附的组件 */
 	UPROPERTY(Replicated)
 	UCPActionComponent* ActionComp;
@@ -92,6 +95,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Tags")
 	FGameplayTagContainer BlockedTags;
 
+	UPROPERTY(Replicated)
+	float TimeStarted;
+	
 	// ======== Protected Methods ========
 
 	/** 本地调用：执行运行状态的视觉更新等 */

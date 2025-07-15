@@ -19,6 +19,8 @@ public:
 	// 这里覆盖基类的实现
 	virtual void Interact_Implementation(APawn* InstigatorPawn) override;
 
+	void OnActorLoaded_Implementation();
+	
 	virtual void UpdateVisualState() override;
 
 	// 构造和生命周期函数
@@ -26,7 +28,7 @@ public:
 
 protected:
 
-	UPROPERTY(ReplicatedUsing="OnRep_LidOpened")
+	UPROPERTY(ReplicatedUsing="OnRep_LidOpened", BlueprintReadOnly, SaveGame)
 	bool bLidOpened;
 
 	UFUNCTION()

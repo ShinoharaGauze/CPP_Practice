@@ -23,9 +23,16 @@ class CPP_PRACTICE_API ICPGameplayInterface
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 
+	UFUNCTION(BlueprintNativeEvent)
+	void OnActorLoaded();
+	
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void Interact(APawn* InstigatorPawn);
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
-	bool CanInteract(APawn* InstigatorPawn) const;
+	bool CanInteract(APawn* InstigatorPawn);
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	FText GetInteractText(APawn* InstigatorPawn);
+	
 };

@@ -7,6 +7,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "CPGameModeBase.generated.h"
 
+class UCPSaveGame;
 class UEnvQueryInstanceBlueprintWrapper;
 class UEnvQuery;
 
@@ -20,6 +21,11 @@ class CPP_PRACTICE_API ACPGameModeBase : public AGameModeBase
 
 protected:
 
+	FString SlotName;
+
+	UPROPERTY()
+	UCPSaveGame* CurrentSaveGame;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	TSubclassOf<AActor> MinionClass;
 	
@@ -60,9 +66,19 @@ public:
 	virtual void OnActorKilled(AActor* VictimActor, AActor* Killer);
 
 	ACPGameModeBase();
+
+	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;
 	
 	virtual void StartPlay() override;
 
+	virtual void HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer) override;
+	
 	UFUNCTION(Exec)
 	void KillAll();
+
+	UFUNCTION(BlueprintCallable, Category = "SaveGame")
+	void WriteSaveGame();
+
+	UFUNCTION(BlueprintCallable, Category = "LoadGame")
+	void LoadSaveGame();
 };

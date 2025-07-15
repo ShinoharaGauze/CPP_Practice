@@ -37,6 +37,11 @@ bool ACPPickUpBase::CanInteract_Implementation(APawn* InstigatorPawn) const
 	return bIsActive;
 }
 
+FText ACPPickUpBase::GetInteractText_Implementation(APawn* InstigatorPawn)
+{
+	return FText::GetEmpty();
+}
+
 void ACPPickUpBase::SetActiveState(bool bNewActive)
 {
 	if (HasAuthority()) // 仅服务端可以设置
