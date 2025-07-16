@@ -3,13 +3,15 @@
 
 #include "AI/CPBTTask_RangedAttack.h"
 #include "AIController.h"
+#include "CPActionComponent.h"
+#include "CPAction_Effect.h"
 #include "CPAttributeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "GameFramework/Character.h"
 
 UCPBTTask_RangedAttack::UCPBTTask_RangedAttack()
 {
-	MaxBulletSpread = 2.0f;
+	MaxBulletSpread = 3.0f;
 }
 
 EBTNodeResult::Type UCPBTTask_RangedAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
@@ -34,6 +36,16 @@ EBTNodeResult::Type UCPBTTask_RangedAttack::ExecuteTask(UBehaviorTreeComponent& 
 		if (!UCPAttributeComponent::IsActorAlive(TargetActor))
 		{
 			return EBTNodeResult::Failed;
+		}
+
+		UCPActionComponent* TargetActionComp = Cast<UCPActionComponent>(TargetActor->GetComponentByClass(UCPActionComponent::StaticClass()));
+
+		if (TargetActionComp)
+		{
+			if (TargetActionComp->HasAction(TSubclassOf<UCPAction>(BurningActionClass)))
+			{
+				TargetActionComp->AddAction(MyPawn, TSubclassOf<UCPAction>(StunnedActionClass));
+			}
 		}
 		
 		FVector Direction = TargetActor->GetActorLocation() - MuzzleLocation;

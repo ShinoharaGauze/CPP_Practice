@@ -30,10 +30,6 @@ void ACPItemChest::Interact_Implementation(APawn* InstigatorPawn)
 
 void ACPItemChest::OnActorLoaded_Implementation()
 {
-	UE_LOG(LogTemp, Log, TEXT("[Chest] OnActorLoaded: %s | bLidOpened = %s"),
-		*GetName(),
-		bLidOpened ? TEXT("true") : TEXT("false"));
-	
 	UpdateVisualState();
 }
 

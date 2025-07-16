@@ -9,45 +9,22 @@
   <component name="ChangeListManager">
     <list default="true" id="65846d85-43f7-4c88-a000-293a598dde5c" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CPP_Practice.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CPP_Practice.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CPP_Practice.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/CPP_Practice.uproject" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultGame.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGame.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Config/DefaultGameplayTags.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGameplayTags.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultInput.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultInput.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/Actions/BP_Action_Effect_Burning.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/Actions/BP_Action_Effect_Burning.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/AI/BT_MinionRanged.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/AI/BT_MinionRanged.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/Actions/BP_Action_Effect_Stunned.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/Actions/BP_Action_Effect_Stunned.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/BP_GameMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/BP_GameMode.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/BP_PlayerCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/BP_PlayerCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/BP_PlayerController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/BP_PlayerController.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/BP_TreasureChest.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/BP_TreasureChest.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/Maps/TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/Maps/TestLevel.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/Materials/M_HealthBar.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/Materials/M_HealthBar.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_Credits.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_Credits.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_DefualtInteraction_Widget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_DefualtInteraction_Widget.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_GameModeInfo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_GameModeInfo.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_EffectSlot.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_EffectSlot.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_MinionHealthWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/CPP_Practice/UI/WBP_MinionHealthWidget.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ParagonGideon/Characters/Heroes/Gideon/Animations/Blendspaces/TravelMode_Direction_BS.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ParagonGideon/Characters/Heroes/Gideon/Animations/Blendspaces/TravelMode_Direction_BS.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ParagonGideon/Characters/Heroes/Gideon/Animations/TravelMode_Hover_Bwd.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ParagonGideon/Characters/Heroes/Gideon/Animations/TravelMode_Hover_Bwd.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ParagonGideon/Characters/Heroes/Gideon/Animations/TravelMode_Hover_Fwd.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ParagonGideon/Characters/Heroes/Gideon/Animations/TravelMode_Hover_Fwd.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ParagonGideon/Characters/Heroes/Gideon/Animations/TravelMode_Hover_Left.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ParagonGideon/Characters/Heroes/Gideon/Animations/TravelMode_Hover_Left.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ParagonGideon/Characters/Heroes/Gideon/Animations/TravelMode_Hover_Right.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ParagonGideon/Characters/Heroes/Gideon/Animations/TravelMode_Hover_Right.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ParagonGideon/Characters/Heroes/Gideon/Gideon_AnimBlueprint.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ParagonGideon/Characters/Heroes/Gideon/Gideon_AnimBlueprint.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPAction.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPAction.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPAction_Effect.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPAction_Effect.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/AI/CPBTTask_RangedAttack.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/AI/CPBTTask_RangedAttack.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPGameModeBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPGameModeBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPHealthPotion.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPHealthPotion.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPItemChest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPItemChest.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPPickUpBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPPickUpBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPPlayerController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPPlayerState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPPlayerState.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPMagicProjectile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Private/CPMagicProjectile.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/AI/CPBTTask_RangedAttack.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/AI/CPBTTask_RangedAttack.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPAction.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPAction.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPActionComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPActionComponent.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPAction_Effect.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPAction_Effect.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPGameModeBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPGameModeBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPGameplayInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPGameplayInterface.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPHealthPotion.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPHealthPotion.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPItemChest.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPItemChest.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPPickUpBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPPickUpBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPPlayerController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPPlayerState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPPlayerState.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPSaveGame.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/CPP_Practice/Public/CPSaveGame.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -223,7 +200,8 @@
       <workItem from="1752197743827" duration="5451000" />
       <workItem from="1752208829637" duration="10336000" />
       <workItem from="1752456766610" duration="12938000" />
-      <workItem from="1752543187821" duration="10999000" />
+      <workItem from="1752543187821" duration="11530000" />
+      <workItem from="1752629467424" duration="15701000" />
     </task>
     <servers />
   </component>

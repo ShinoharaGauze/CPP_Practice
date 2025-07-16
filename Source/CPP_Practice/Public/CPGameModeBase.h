@@ -7,9 +7,39 @@
 #include "GameFramework/GameModeBase.h"
 #include "CPGameModeBase.generated.h"
 
+class UCPMonsterData;
 class UCPSaveGame;
 class UEnvQueryInstanceBlueprintWrapper;
 class UEnvQuery;
+
+USTRUCT(BlueprintType)
+struct FMonsterInfoRow : public FTableRowBase
+{
+	GENERATED_BODY()
+
+public:
+
+	FMonsterInfoRow()
+	{
+		Weight = 1.0f;
+		SpawnCost = 5.0f;
+		KillReward = 20.0f;
+	}
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FPrimaryAssetId MonsterId;
+	//TSubclassOf<AActor> MonsterClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float Weight;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float SpawnCost;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float KillReward;
+	
+};
 
 /**
  * 
@@ -25,9 +55,12 @@ protected:
 
 	UPROPERTY()
 	UCPSaveGame* CurrentSaveGame;
-	
+
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
-	TSubclassOf<AActor> MinionClass;
+	UDataTable* MonsterTable;
+	
+	//UPROPERTY(EditDefaultsOnly, Category = "AI")
+	//TSubclassOf<AActor> MinionClass;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	UEnvQuery* SpawnBotQuery;
@@ -55,6 +88,9 @@ protected:
 	UFUNCTION()
 	void OnSpawnBotQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryInstance, EEnvQueryStatus::Type QueryStatus);
 
+	UFUNCTION()
+	void OnMonsterLoaded(FPrimaryAssetId LoadedID, FVector SpawnLocation);
+	
 	UFUNCTION()
 	void RespawnPlayerElapsed(AController* Controller);
 

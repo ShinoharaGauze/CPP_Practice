@@ -35,7 +35,10 @@ void ACPMagicProjectile::OnActorOverlap(::UPrimitiveComponent* OverlappedCompone
 
 			if (ActionComp && HasAuthority())
 			{
-				ActionComp->AddAction(GetInstigator(), BurningActionClass);
+				if (FMath::FRand() < 0.333f)
+				{
+					ActionComp->AddAction(GetInstigator(), BurningActionClass);
+				}
 			}
 		}
 	}

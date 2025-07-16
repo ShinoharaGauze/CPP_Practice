@@ -6,6 +6,7 @@
 #include "BehaviorTree/BTTaskNode.h"
 #include "CPBTTask_RangedAttack.generated.h"
 
+class UCPAction_Effect;
 /**
  * 
  */
@@ -23,6 +24,12 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "AI")
 	TSubclassOf<AActor> ProjectileClass;
+
+	UPROPERTY(EditAnywhere, Category = "Damage")
+	TSubclassOf<UCPAction_Effect> BurningActionClass;
+
+	UPROPERTY(EditAnywhere, Category = "Damage")
+	TSubclassOf<UCPAction_Effect> StunnedActionClass;
 
 public:
 

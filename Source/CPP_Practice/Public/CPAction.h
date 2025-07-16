@@ -76,7 +76,7 @@ protected:
 	// ======== Protected Properties ========
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
-	UTexture2D* Icon;
+	TSoftObjectPtr<UTexture2D> Icon;
 	
 	/** 动作所依附的组件 */
 	UPROPERTY(Replicated)
