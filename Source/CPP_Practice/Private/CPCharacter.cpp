@@ -4,6 +4,7 @@
 #include "CPCharacter.h"
 
 #include "CPActionComponent.h"
+#include "CPAction_Effect.h"
 #include "CPAttributeComponent.h"
 #include "CPInteractionComponent.h"
 #include "Camera/CameraComponent.h"
@@ -33,6 +34,24 @@ ACPCharacter::ACPCharacter()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	
 	bUseControllerRotationYaw = false;
+}
+
+bool ACPCharacter::IsMovementBlocked() const
+{
+	if (!ActionComp)
+	{
+		return false;
+	}
+
+	for (TSubclassOf ActionClass : MovementBlockingActions)
+	{
+		if (ActionComp->HasAction(ActionClass))
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void ACPCharacter::PostInitializeComponents()
@@ -71,6 +90,8 @@ void ACPCharacter::HealSelf(float Amount /* = 100 */)
 
 void ACPCharacter::MoveForward(float Value)
 {
+	if (IsMovementBlocked()) return;
+	
 	FRotator ControlRot = GetControlRotation();
 	ControlRot.Pitch = 0.0f;
 	ControlRot.Roll = 0.0f;
@@ -80,6 +101,8 @@ void ACPCharacter::MoveForward(float Value)
 
 void ACPCharacter::MoveRight(float Value)
 {
+	if (IsMovementBlocked()) return;
+	
 	FRotator ControlRot = GetControlRotation();
 	ControlRot.Pitch = 0.0f;
 	ControlRot.Roll = 0.0f;
@@ -124,6 +147,8 @@ void ACPCharacter::PrimaryInteract()
 
 void ACPCharacter::Jump()
 {
+	if (IsMovementBlocked()) return;
+	
 	Super::Jump();
 }
 

@@ -87,6 +87,8 @@ void UCPActionComponent::RemoveAction(UCPAction* ActionToRemove)
 
 bool UCPActionComponent::StartActionByName(AActor* Instigator, FName ActionName)
 {
+	TRACE_CPUPROFILER_EVENT_SCOPE(StartActionByName);
+	
 	for (UCPAction* Action : Actions)
 	{
 		if (Action && Action->ActionName == ActionName)
@@ -102,6 +104,8 @@ bool UCPActionComponent::StartActionByName(AActor* Instigator, FName ActionName)
 			{
 				ServerStartAction(Instigator, ActionName);
 			}
+
+			TRACE_BOOKMARK(TEXT("StartAction::%s"), *GetNameSafe(Action));
 			
 			Action->StartAction(Instigator);
 			return true;

@@ -7,6 +7,7 @@
 #include "CPCharacter.generated.h"
 
 
+class UCPAction;
 class UCPActionComponent;
 class UCPAttributeComponent;
 class UCPInteractionComponent;
@@ -36,6 +37,9 @@ protected:
 	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UCPActionComponent> ActionComp;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Actions")
+	TArray<TSubclassOf<UCPAction>> MovementBlockingActions;
+
 	void MoveForward(float Value);
 
 	void MoveRight(float Value);
@@ -64,6 +68,8 @@ protected:
 public:	
 
 	ACPCharacter();
+	
+	bool IsMovementBlocked() const;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
